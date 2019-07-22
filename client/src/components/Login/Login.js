@@ -10,9 +10,10 @@ export class Login extends React.Component {
             password: ""
         }
         this.handleChange.bind(this);
-        this.send.bind(this);
+        this.handleSubmit.bind(this);
     }
-    send = event => {
+
+    handleSubmit = event => {
         if(this.state.email.length === 0){
             return;
         }
@@ -27,11 +28,13 @@ export class Login extends React.Component {
             return;
         })
     }    
+
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
         });
     }
+    
     render() {
         return(
             <div className="Login">
@@ -45,7 +48,7 @@ export class Login extends React.Component {
                     <FormControl value={this.state.password} onChange={this.handleChange} type="password"/>
                 </FormGroup>
 
-                <Button onClick={this.send} block bsSize="large" type="submit">
+                <Button onClick={this.handleSubmit} block bsSize="large" type="submit">
                     Connexion
                 </Button>
             </div>

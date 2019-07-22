@@ -11,9 +11,10 @@ export class Signup extends React.Component {
             cpassword: ""
         }
         this.handleChange.bind(this);
-        this.send.bind(this);
+        this.handleSubmit.bind(this);
     }
-    send = event => {
+
+    handleSubmit = event => {
         if(this.state.email.length === 0){
             return;
         }
@@ -32,11 +33,13 @@ export class Signup extends React.Component {
             return;
         })
     }    
+    
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
         });
     }
+    
     render() {
         return(
             <div className="Login">
@@ -55,7 +58,7 @@ export class Signup extends React.Component {
                     <FormControl value={this.state.cpassword} onChange={this.handleChange} type="password"/>
                 </FormGroup>
 
-                <Button onClick={this.send} block bsSize="large" type="submit">
+                <Button onClick={this.handleSubmit} block bsSize="large" type="submit">
                     Inscription
                 </Button>
             </div>
