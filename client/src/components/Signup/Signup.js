@@ -9,7 +9,7 @@ export class Signup extends React.Component {
             email : "",
             password: "",
             cpassword: ""
-        }
+        };
         this.handleChange.bind(this);
         this.handleSubmit.bind(this);
     }
@@ -24,11 +24,11 @@ export class Signup extends React.Component {
         var _send = {
             email: this.state.email,
             password: this.state.password
-        }
-        API.signup(_send).then(function(data){
-            localStorage.setItem('token', data.data.token);
-            window.location = "/dashboard"
-        },function(error){
+        };
+        API.signup(_send).then((data) => {
+            localStorage.setItem("token", data.data.token);
+            window.location = "/dashboard";
+        }, (error) => {
             console.log(error);
             return;
         })

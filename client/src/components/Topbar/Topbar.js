@@ -9,6 +9,7 @@ export class Topbar extends React.Component {
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/signup">Signup</Nav.Link>
+                    <Nav.Link href="/profile">Profile</Nav.Link>
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />

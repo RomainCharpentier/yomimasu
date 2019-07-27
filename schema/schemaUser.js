@@ -15,7 +15,7 @@ var userSchema = mongoose.Schema({
         type: String,
         required: true
     }
-},{ timestamps: { createdAt: 'created_at' }})
+},{ timestamps: { createdAt: "created_at" }})
 
 
 userSchema.methods = {
@@ -27,4 +27,11 @@ userSchema.methods = {
 	}
 }
 
-module.exports = mongoose.model('User', userSchema);
+
+userSchema.statics = {
+	getUser: function (token) {
+		return jwt.decode(token, config.secret);
+	}
+}
+
+module.exports = mongoose.model("User", userSchema);

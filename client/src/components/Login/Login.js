@@ -8,7 +8,7 @@ export class Login extends React.Component {
         this.state = {
             email : "",
             password: ""
-        }
+        };
         this.handleChange.bind(this);
         this.handleSubmit.bind(this);
     }
@@ -20,10 +20,10 @@ export class Login extends React.Component {
         if(this.state.password.length === 0){
             return;
         }
-        API.login(this.state.email, this.state.password).then(function(data){
-            localStorage.setItem('token', data.data.token);
+        API.login(this.state.email, this.state.password).then((data) => {
+            localStorage.setItem("token", data.data.token);
             window.location = "/dashboard"
-        },function(error){
+        }, (error) => {
             console.log(error);
             return;
         })
