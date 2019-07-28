@@ -33,5 +33,9 @@ export default {
             },
             "headers": headers
         });
+    },
+
+    updateUser : function(user) {
+        return axios.post(burl + "/user/updateUser", user, {"headers": headers});
     }
 }

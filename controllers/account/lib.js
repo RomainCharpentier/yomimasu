@@ -29,7 +29,7 @@ function signup(req, res) {
                     }
                 }
             })
-        })
+        });
 
         // Inscription
         findUser.then(function () {
@@ -63,7 +63,7 @@ function signup(req, res) {
                         "text": "Erreur interne"
                     });
             }
-        })
+        });
     }
 }
 
@@ -116,7 +116,15 @@ function getUser(req, res) {
     }
 }
 
+function updateUser(req, res) {
+    User.findOneAndUpdate({"email": req.body.email}, req.body, {upsert:true}, function(err, doc) {
+        if (err) return res.send(500, { error: err });
+        return res.send("succesfully saved");
+    });
+}
+
 //On exporte les fonctions
 exports.login = login;
 exports.signup = signup;
 exports.getUser = getUser;
+exports.updateUser = updateUser;

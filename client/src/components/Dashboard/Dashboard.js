@@ -8,10 +8,12 @@ export class Dashboard extends React.Component {
         super(props);
         this.disconnect.bind(this);
     }
+    
     disconnect = event => {
         API.logout();
         window.location = "/";
     }
+    
     render() {
         return(
             <div className="Dashboard">
