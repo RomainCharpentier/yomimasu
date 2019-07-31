@@ -30,7 +30,7 @@ export class Profile extends React.Component {
     handleSubmit = event => {
         var _send = {
             "email": this.state.user.email,
-            "password": this.state.user.password
+            "pseudo": this.state.user.pseudo
         };
         API.updateUser(_send).then((data) => {
             localStorage.setItem("token", data.data.token);
@@ -43,14 +43,11 @@ export class Profile extends React.Component {
     displayForm = function() {
         return (
             <div>
-                <FormGroup controlId="email" bsSize="large">
-                    <FormLabel>Email</FormLabel>
-                    <FormControl type="email" value={this.state.user.email} onChange={this.handleChange}/>
-                </FormGroup>
+                <p>{this.state.user.email}</p>
 
-                <FormGroup controlId="password" bsSize="large">
-                    <FormLabel>Password</FormLabel>
-                    <FormControl value={this.state.user.password} onChange={this.handleChange} type="password"/>
+                <FormGroup controlId="pseudo" bsSize="large">
+                    <FormLabel>Pseudo</FormLabel>
+                    <FormControl type="text" value={this.state.user.pseudo} onChange={this.handleChange}/>
                 </FormGroup>
 
                 <Button onClick={this.handleSubmit} block bsSize="large" type="submit">
@@ -62,7 +59,7 @@ export class Profile extends React.Component {
     
     render() {
         return(
-            <div className="Login">
+            <div className="Form">
                 <h1>Profil</h1>
                 { this.state && this.state.user && this.displayForm() }
             </div>

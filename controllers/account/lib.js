@@ -67,7 +67,7 @@ function signup(req, res) {
     }
 }
 
-function login(req, res) {
+function signin(req, res) {
     if (!req.body.email || !req.body.password) {
         // Le cas où l'email ou bien le password ne serait pas soumit ou nul
         res.status(400).json({
@@ -90,7 +90,7 @@ function login(req, res) {
                 if (user.authenticate(req.body.password)) {
                     res.status(200).json({
                         "token": user.getToken(),
-                        "text": "Authentification réussi"
+                        "text": "Authentification réussie"
                     });
                 } else{
                     res.status(401).json({
@@ -117,14 +117,27 @@ function getUser(req, res) {
 }
 
 function updateUser(req, res) {
-    User.findOneAndUpdate({"email": req.body.email}, req.body, {upsert:true}, function(err, doc) {
-        if (err) return res.send(500, { error: err });
-        return res.send("succesfully saved");
+    User.findOneAndUpdate({"email": req.body.email}, req.body, {upsert:true}, (err, user) => {
+        if (err) {
+            res.status(500).json({
+                "text": "Erreur interne"
+            });
+        } else if(!user) {
+            res.status(401).json({
+                "text": "L'utilisateur n'existe pas"
+            });
+        } else {
+            res.status(200).json({
+                "user": user,
+                "token": user.getToken(),
+                "text": "Modification réussie"
+            });
+        }
     });
 }
 
 //On exporte les fonctions
-exports.login = login;
+exports.signin = signin;
 exports.signup = signup;
 exports.getUser = getUser;
 exports.updateUser = updateUser;

@@ -5,8 +5,8 @@ const headers = {
 const burl = "http://localhost:8000";
 
 export default {
-    login : function(email, password) {
-        return axios.post(burl + "/user/login", {
+    signin : function(email, password) {
+        return axios.post(burl + "/user/signin", {
             "email" : email,
             "password" : password
         }, {
@@ -24,6 +24,7 @@ export default {
     
     logout : function() {
         localStorage.clear();
+        window.location = "/";
     },
 
     getUser : function(token) {

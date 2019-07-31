@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import API from '../../utils/API';
 
-export class Login extends React.Component {
+export class Signin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,7 +20,7 @@ export class Login extends React.Component {
         if(this.state.password.length === 0){
             return;
         }
-        API.login(this.state.email, this.state.password).then((data) => {
+        API.signin(this.state.email, this.state.password).then((data) => {
             localStorage.setItem("token", data.data.token);
             window.location = "/dashboard"
         }, (error) => {
@@ -37,7 +37,7 @@ export class Login extends React.Component {
     
     render() {
         return(
-            <div className="Login">
+            <div className="Form">
                 <FormGroup controlId="email" bsSize="large">
                     <FormLabel>Email</FormLabel>
                     <FormControl autoFocus type="email" value={this.state.email} onChange={this.handleChange}/>

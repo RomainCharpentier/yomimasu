@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Dashboard } from './components/Dashboard/Dashboard.js';
-import { Login } from './components/Login/Login.js';
+import { Signin } from './components/Signin/Signin.js';
 import { Signup } from './components/Signup/Signup.js';
 import { Topbar } from './components/Topbar/Topbar.js';
 import { Profile } from './components/Profile/Profile.js';
+import { Signout } from './components/Signout/Signout.js';
 import { PrivateRoute } from './components/PrivateRoute.js';
 import './App.css';
 
@@ -15,10 +15,10 @@ class App extends Component {
         <Topbar />
         <div className="App-content">
             <Switch>  
-                <Route exact path="/" component={Login}/>
+                <Route exact path="/" component={Signin}/>
                 <Route exact path ="/signup" component={Signup}/>
-                <PrivateRoute path='/dashboard' component={Dashboard} />
                 <PrivateRoute path='/profile' component={Profile} />
+                <PrivateRoute path='/signout' component={Signout} />
             </Switch>
         </div>
       </div>

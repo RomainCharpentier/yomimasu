@@ -13,11 +13,17 @@ var userSchema = mongoose.Schema({
 	},
 	password: {
         type: String,
-        required: true
+        required: true,
+		trim: true
 	},
 	avatar: { 
 		data: Buffer, 
 		contentType: String 
+	},
+	avatar: { 
+		type: String,
+		default: "ss",
+		trim: true
 	}
 },{ timestamps: { createdAt: "created_at" }});
 

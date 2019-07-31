@@ -42,7 +42,7 @@ export class Signup extends React.Component {
     
     render() {
         return(
-            <div className="Login">
+            <div className="Form">
                 <FormGroup controlId="email" bsSize="large">
                     <FormLabel>Email</FormLabel>
                     <FormControl autoFocus type="email" value={this.state.email} onChange={this.handleChange}/>
