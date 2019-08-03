@@ -3,6 +3,7 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import API from '../../utils/API';
 
 export class Signup extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -32,7 +33,7 @@ export class Signup extends React.Component {
             console.log(error);
             return;
         })
-    }    
+    }
     
     handleChange = event => {
         this.setState({
@@ -41,7 +42,7 @@ export class Signup extends React.Component {
     }
     
     render() {
-        return(
+        return (
             <div className="Form">
                 <FormGroup controlId="email" bsSize="large">
                     <FormLabel>Email</FormLabel>
@@ -62,6 +63,6 @@ export class Signup extends React.Component {
                     Inscription
                 </Button>
             </div>
-        )
+        );
     }
 }

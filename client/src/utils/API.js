@@ -22,9 +22,9 @@ export default {
         return (localStorage.getItem("token") !== null);
     },
     
-    logout : function() {
+    signout : function() {
         localStorage.clear();
-        window.location = "/";
+        window.location.href = "/";
     },
 
     getUser : function(token) {

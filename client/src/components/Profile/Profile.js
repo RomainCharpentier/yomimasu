@@ -3,6 +3,7 @@ import API from '../../utils/API';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 
 export class Profile extends React.Component {
+    
     constructor(props){
         super(props);
         this.handleChange.bind(this);
@@ -19,7 +20,7 @@ export class Profile extends React.Component {
         }, (error) => {
             console.log(error);
         });
-    }    
+    }
     
     handleChange = event => {
         this.setState({
@@ -38,7 +39,7 @@ export class Profile extends React.Component {
             console.log(error);
             return;
         })
-    }   
+    }
 
     displayForm = function() {
         return (
@@ -58,7 +59,7 @@ export class Profile extends React.Component {
     }
     
     render() {
-        return(
+        return (
             <div className="Form">
                 <h1>Profil</h1>
                 { this.state && this.state.user && this.displayForm() }

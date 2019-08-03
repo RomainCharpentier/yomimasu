@@ -6,17 +6,26 @@ import { Topbar } from './components/Topbar/Topbar.js';
 import { Profile } from './components/Profile/Profile.js';
 import { Signout } from './components/Signout/Signout.js';
 import { PrivateRoute } from './components/PrivateRoute.js';
+import { GuestRoute } from './components/GuestRoute.js';
+import { Home } from './components/Home/Home.js';
 import './App.css';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    localStorage.clear();
+  }
+  
   render() {
     return (
       <div className="App">
         <Topbar />
         <div className="App-content">
-            <Switch>  
-                <Route exact path="/" component={Signin}/>
-                <Route exact path ="/signup" component={Signup}/>
+            <Switch>
+                <Route exact path="/" component={Home}/>
+                <GuestRoute exact path="/signin" component={Signin}/>
+                <GuestRoute exact path ="/signup" component={Signup}/>
                 <PrivateRoute path='/profile' component={Profile} />
                 <PrivateRoute path='/signout' component={Signout} />
             </Switch>
