@@ -20,9 +20,8 @@ var userSchema = mongoose.Schema({
 		data: Buffer, 
 		contentType: String 
 	},
-	avatar: { 
+	pseudo: { 
 		type: String,
-		default: "ss",
 		trim: true
 	}
 },{ timestamps: { createdAt: "created_at" }});

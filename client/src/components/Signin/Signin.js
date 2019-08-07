@@ -23,7 +23,7 @@ export class Signin extends React.Component {
         }
         API.signin(this.state.email, this.state.password).then((data) => {
             localStorage.setItem("token", data.data.token);
-            window.location = "/dashboard"
+            window.location = "/"
         }, (error) => {
             console.log(error);
             return;
@@ -39,17 +39,17 @@ export class Signin extends React.Component {
     render() {
         return (
             <div className="Form">
-                <FormGroup controlId="email" bsSize="large">
+                <FormGroup controlId="email">
                     <FormLabel>Email</FormLabel>
                     <FormControl autoFocus type="email" value={this.state.email} onChange={this.handleChange}/>
                 </FormGroup>
                 
-                <FormGroup controlId="password" bsSize="large">
+                <FormGroup controlId="password">
                     <FormLabel>Password</FormLabel>
                     <FormControl value={this.state.password} onChange={this.handleChange} type="password"/>
                 </FormGroup>
 
-                <Button onClick={this.handleSubmit} block bsSize="large" type="submit">
+                <Button onClick={this.handleSubmit} block type="submit">
                     Connexion
                 </Button>
             </div>

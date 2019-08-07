@@ -11,11 +11,6 @@ import { Home } from './components/Home/Home.js';
 import './App.css';
 
 class App extends Component {
-
-  constructor(props) {
-    super(props);
-    localStorage.clear();
-  }
   
   render() {
     return (

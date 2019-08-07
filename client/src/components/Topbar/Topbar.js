@@ -35,10 +35,10 @@ export class Topbar extends React.Component {
         const isAuth = this.state.isAuth;
         var links;
         if (isAuth) {
-            links = this.getPublicBar();
+            links = this.getPrivateBar();
 
         } else {
-            links = this.getPrivateBar();
+            links = this.getPublicBar();
             
         }
 

@@ -117,7 +117,7 @@ function getUser(req, res) {
 }
 
 function updateUser(req, res) {
-    User.findOneAndUpdate({"email": req.body.email}, req.body, {upsert:true}, (err, user) => {
+    User.findOneAndUpdate({"email": req.body.email}, req.body, {"new": true}, (err, user) => {
         if (err) {
             res.status(500).json({
                 "text": "Erreur interne"

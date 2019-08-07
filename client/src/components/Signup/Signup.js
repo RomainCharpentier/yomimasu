@@ -44,22 +44,22 @@ export class Signup extends React.Component {
     render() {
         return (
             <div className="Form">
-                <FormGroup controlId="email" bsSize="large">
+                <FormGroup controlId="email">
                     <FormLabel>Email</FormLabel>
                     <FormControl autoFocus type="email" value={this.state.email} onChange={this.handleChange}/>
                 </FormGroup>
 
-                <FormGroup controlId="password" bsSize="large">
+                <FormGroup controlId="password">
                     <FormLabel>Password</FormLabel>
                     <FormControl value={this.state.password} onChange={this.handleChange} type="password"/>
                 </FormGroup>
 
-                <FormGroup controlId="cpassword" bsSize="large">
+                <FormGroup controlId="cpassword">
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl value={this.state.cpassword} onChange={this.handleChange} type="password"/>
                 </FormGroup>
 
-                <Button onClick={this.handleSubmit} block bsSize="large" type="submit">
+                <Button onClick={this.handleSubmit} block type="submit">
                     Inscription
                 </Button>
             </div>
