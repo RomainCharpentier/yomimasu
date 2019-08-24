@@ -103,7 +103,7 @@ function signin(req, res) {
 }
 
 function getUser(req, res) {
-    var user = User.getUser(req.query.token);
+    var user = User.getUser(req.body.token);
     if (user) {
         res.status(200).json({
             "user": user,
@@ -117,23 +117,31 @@ function getUser(req, res) {
 }
 
 function updateUser(req, res) {
-    User.findOneAndUpdate({"email": req.body.email}, req.body, {"new": true}, (err, user) => {
-        if (err) {
-            res.status(500).json({
-                "text": "Erreur interne"
-            });
-        } else if(!user) {
-            res.status(401).json({
-                "text": "L'utilisateur n'existe pas"
-            });
-        } else {
-            res.status(200).json({
-                "user": user,
-                "token": user.getToken(),
-                "text": "Modification réussie"
-            });
-        }
-    });
+    const width = req.body.avatar_width;
+    const height = req.body.avatar_height;
+    if (width > 0 && width <= 300 && height > 0 && height <= 300) {
+        User.findOneAndUpdate({"email": req.body.user.email}, req.body.user, {"new": true}, (err, user) => {
+            if (err) {
+                res.status(500).json({
+                    "text": "Erreur interne"
+                });
+            } else if(!user) {
+                res.status(401).json({
+                    "text": "L'utilisateur n'existe pas"
+                });
+            } else {
+                res.status(200).json({
+                    "user": user,
+                    "token": user.getToken(),
+                    "text": "Modification réussie"
+                });
+            }
+        });
+    } else {
+        res.status(400).json({
+            "text": "L'avatar doit avoir une dimension max 300x300"
+        });
+    }
 }
 
 //On exporte les fonctions

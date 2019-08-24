@@ -28,12 +28,7 @@ export default {
     },
 
     getUser : function(token) {
-        return axios.get(burl + "/user/getUser", {
-            "params": {
-              "token": token
-            },
-            "headers": headers
-        });
+        return axios.post(burl + "/user/getUser", {"token": token}, {"headers": headers});
     },
 
     updateUser : function(user) {
