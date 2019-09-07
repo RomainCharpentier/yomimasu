@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
-import API from '../../utils/API';
+import API from '../utils/API';
 
 export class Topbar extends React.Component {
 

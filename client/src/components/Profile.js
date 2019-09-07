@@ -1,5 +1,6 @@
 import React from 'react';
-import API from '../../utils/API';
+import API from '../utils/API';
+import ImageConverter from '../utils/ImageConverter';
 import { Button, FormGroup, FormControl, FormLabel, Image as Img, Alert } from "react-bootstrap";
 
 export class Profile extends React.Component {
@@ -9,9 +10,7 @@ export class Profile extends React.Component {
         this.handleChange.bind(this);
         this.handleSubmit.bind(this);
         this.displayForm.bind(this);
-        this.mySuperImageHandler.bind(this);
-        this.fileToDataURL.bind(this);
-        this.dataURIToImageFile.bind(this);
+        this.handleFileChange.bind(this);
     }
 
     componentDidMount() {
@@ -19,75 +18,40 @@ export class Profile extends React.Component {
         var token = localStorage.getItem("token");
         API.getUser(token).then((data) => {
             const user = data.data.user;
+            // Conversion de l'image
+            const image_file = ImageConverter.dataURIToImageFile(user.avatar);
             self.setState({
                 "email": user.email,
                 "pseudo": user.pseudo,
-                "avatar": user.avatar
-            })
-            this.dataURIToImageFile();;
+                "default_avatar": image_file,
+                "avatar_image": image_file
+            });
         }, (error) => {
             console.log(error);
         });
     }
 
-    mySuperImageHandler = event => {
+    handleFileChange = event => {
         delete this.state.server_message;
         this.setState(this.state);
         var file = event.target.files[0];
 
-        /// get data
+        // get data
         var callback = (image, dataURI) => {
             this.setState({
                 "avatar": dataURI,
                 "avatar_width": image.naturalWidth,
-                "avatar_height": image.naturalHeight
+                "avatar_height": image.naturalHeight,
+                "avatar_image": ImageConverter.dataURIToImageFile(dataURI)
             });
+            return ImageConverter.dataURIToImageFile(dataURI);
         };
         callback.bind(this);
-        this.fileToDataURL(file, callback);
-    }
-
-    fileToDataURL(file, afterLoadSuccessAction) {
-        var drawOnCanvasHandler = (mySuperImage, action) => {
-            var canvas = document.createElement("canvas");
-            canvas.width  = mySuperImage.naturalWidth;
-            canvas.height = mySuperImage.naturalHeight;
-            var ctx = canvas.getContext ("2d");
-            ctx.drawImage(mySuperImage, 0, 0);
-            action(mySuperImage, canvas.toDataURL());
-            this.dataURIToImageFile();
-        }
-        drawOnCanvasHandler.bind(this);
-
-        // création d'une balise <img/> créé à la volé (pas intégrée à la page car c'est inutile)
-        var mySuperImage = new Image();
-        // on lui donne en source l'url de l'image
-        mySuperImage.src = URL.createObjectURL(file);
-        // quand elle sera chargé, on lui volera ses données
-        mySuperImage.onload = drawOnCanvasHandler.bind(null, mySuperImage, afterLoadSuccessAction);
-    }
-
-   dataURIToImageFile() {
-        var split = this.state.avatar.match(/^data:([^;]+)?(?:;base64)?,(.*)/);
-        // type MIME
-        var mimetype = split[1] || "";
-
-        // données
-        var data = Array.from (atob (split[2] || ""));
-        for (var i = 0; i < data.length; ++i) {
-            data[i] = data[i].charCodeAt (0);
-        }
-
-        // recréation du fichier
-        var fileDataBuffer = new Uint8Array (data);
-        var file = new File([fileDataBuffer.buffer], "imageName", { type: mimetype });
-
-        this.setState({
-            "avatar_image": URL.createObjectURL(file)
-        });
+        ImageConverter.fileToDataURL(file, callback);
     }
     
     handleChange = event => {
+        // On efface le message du serveur
         delete this.state.server_message;
         this.setState(this.state);
         this.setState({
@@ -105,16 +69,24 @@ export class Profile extends React.Component {
             "avatar_width": this.state.avatar_width,
             "avatar_height": this.state.avatar_height
         };
+        // Appel de la méthode update via API
         API.updateUser(_send).then((data) => {
+            // Maj du token
             localStorage.setItem("token", data.data.token);
+            this.setState({
+                "default_avatar": this.state.avatar_image,
+                "server_message": data.data.message
+            });
+            /* event.target.value = null; */
         }, (error) => {
             console.log(error.response);
-            
             this.setState({
-                "server_message": error.response.data.text
-            })
+                "avatar_image": this.state.default_avatar,
+                "server_message": error.response.data.message
+            });
+            /* event.target.value = null; */
             return;
-        })
+        });
     }
 
     displayForm() {
@@ -124,7 +96,7 @@ export class Profile extends React.Component {
 
                 <FormGroup controlId="avatar">
                     <img src={this.state.avatar_image} />
-                    <FormControl type="file" accept="image/*" onChange={this.mySuperImageHandler} />
+                    <FormControl type="file" accept="image/*" onChange={this.handleFileChange} />
                 </FormGroup>
 
                 <FormGroup controlId="pseudo">
@@ -140,8 +112,9 @@ export class Profile extends React.Component {
     }
     
     render() {
+        // Message du serveur (erreur ou non)
         const isError = this.state && this.state.server_message;
-        let message = (<Alert variant="danger">{this.state && this.state.server_message}</Alert>);
+        let message = (<Alert variant={isError && this.state.server_message.type}>{isError && this.state.server_message.message}</Alert>);
         return (
             <div className="Form">
                 {isError && message}

@@ -123,23 +123,35 @@ function updateUser(req, res) {
         User.findOneAndUpdate({"email": req.body.user.email}, req.body.user, {"new": true}, (err, user) => {
             if (err) {
                 res.status(500).json({
-                    "text": "Erreur interne"
+                    "message": {
+                        "type": "danger",
+                        "message": "Erreur interne"
+                    }
                 });
             } else if(!user) {
                 res.status(401).json({
-                    "text": "L'utilisateur n'existe pas"
+                    "message": {
+                        "type": "danger",
+                        "message": "L'utilisateur n'existe pas"
+                    }
                 });
             } else {
                 res.status(200).json({
                     "user": user,
                     "token": user.getToken(),
-                    "text": "Modification réussie"
+                    "message": {
+                        "type": "success",
+                        "message": "Modification réussie"
+                    }
                 });
             }
         });
     } else {
         res.status(400).json({
-            "text": "L'avatar doit avoir une dimension max 300x300"
+            "message": {
+                "type": "danger",
+                "message": "L'avatar doit avoir une dimension max 300x300"
+            }
         });
     }
 }
