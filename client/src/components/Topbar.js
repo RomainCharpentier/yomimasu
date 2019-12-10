@@ -14,9 +14,9 @@ export class Topbar extends React.Component {
     getPublicBar = () => {
         return (
             <Nav className="mr-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/signup">Signup</Nav.Link>
-                <Nav.Link href="/signin">Signin</Nav.Link>
+                <Nav.Link href="/">Accueil</Nav.Link>
+                <Nav.Link href="/signup">Inscription</Nav.Link>
+                <Nav.Link href="/signin">Connexion</Nav.Link>
             </Nav>
         );
     }
@@ -24,9 +24,9 @@ export class Topbar extends React.Component {
     getPrivateBar = () => {
         return (
             <Nav className="mr-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/profile">Profile</Nav.Link>
-                <Nav.Link href="/signout">Signout</Nav.Link>
+                <Nav.Link href="/">Accueil</Nav.Link>
+                <Nav.Link href="/profile">Profil</Nav.Link>
+                <Nav.Link href="/signout">Déconnexion</Nav.Link>
             </Nav>
         );
     }

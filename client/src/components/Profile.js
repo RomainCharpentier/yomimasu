@@ -1,7 +1,8 @@
 import React from 'react';
 import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
-import { Button, FormGroup, FormControl, FormLabel, Image as Img, Alert } from "react-bootstrap";
+import { Button, FormGroup, FormControl, FormLabel, Image, Alert } from "react-bootstrap";
+import { ImageInput } from './ImageInput.js';
 
 export class Profile extends React.Component {
     
@@ -93,11 +94,8 @@ export class Profile extends React.Component {
         return (
             <div>
                 <p>{this.state.email}</p>
-
-                <FormGroup controlId="avatar">
-                    <img src={this.state.avatar_image} />
-                    <FormControl type="file" accept="image/*" onChange={this.handleFileChange} />
-                </FormGroup>
+                <ImageInput action={this.handleFileChange} />
+                <Image src={this.state.avatar_image} />
 
                 <FormGroup controlId="pseudo">
                     <FormLabel>Pseudo</FormLabel>
