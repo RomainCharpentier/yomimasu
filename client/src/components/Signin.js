@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import API from '../utils/API';
 
 export class Signin extends React.Component {
@@ -7,8 +7,8 @@ export class Signin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email : "",
-            password: ""
+            email : '',
+            password: ''
         };
         this.handleChange.bind(this);
         this.handleSubmit.bind(this);
@@ -22,8 +22,8 @@ export class Signin extends React.Component {
             return;
         }
         API.signin(this.state.email, this.state.password).then((data) => {
-            localStorage.setItem("token", data.data.token);
-            window.location = "/"
+            localStorage.setItem('token', data.data.token);
+            window.location = '/'
         }, (error) => {
             console.log(error);
             return;
@@ -38,18 +38,18 @@ export class Signin extends React.Component {
     
     render() {
         return (
-            <div className="Form">
-                <FormGroup controlId="email">
+            <div className='Form'>
+                <FormGroup controlId='email'>
                     <FormLabel>Email</FormLabel>
-                    <FormControl autoFocus type="email" value={this.state.email} onChange={this.handleChange}/>
+                    <FormControl autoFocus type='email' value={this.state.email} onChange={this.handleChange}/>
                 </FormGroup>
                 
-                <FormGroup controlId="password">
+                <FormGroup controlId='password'>
                     <FormLabel>Password</FormLabel>
-                    <FormControl value={this.state.password} onChange={this.handleChange} type="password"/>
+                    <FormControl value={this.state.password} onChange={this.handleChange} type='password'/>
                 </FormGroup>
 
-                <Button onClick={this.handleSubmit} block type="submit">
+                <Button onClick={this.handleSubmit} block type='submit'>
                     Connexion
                 </Button>
             </div>

@@ -1,37 +1,46 @@
 import axios from 'axios';
 const headers = {
-    "Content-Type": "application/json"
+    'Content-Type': 'application/json'
 };
-const burl = "http://localhost:8000";
+const burl = 'http://localhost:8000';
 
 export default {
     signin : function(email, password) {
-        return axios.post(burl + "/user/signin", {
-            "email" : email,
-            "password" : password
+        return axios.post(burl + '/user/signin', {
+            email : email,
+            password : password
         }, {
-            "headers": headers
+            headers: headers
         });
     },
 
     signup : function(send) {
-        return axios.post(burl + "/user/signup", send, {"headers": headers});
+        return axios.post(burl + '/user/signup', send, {headers: headers});
     },
     
     isAuth : function() {
-        return (localStorage.getItem("token") !== null);
+        return (localStorage.getItem('token') !== null);
     },
     
     signout : function() {
         localStorage.clear();
-        window.location.href = "/";
+        window.location.href = '/';
     },
 
     getUser : function(token) {
-        return axios.post(burl + "/user/getUser", {"token": token}, {"headers": headers});
+        return axios.post(burl + '/user/getUser', {'token': token}, {headers: headers});
     },
 
     updateUser : function(user) {
-        return axios.post(burl + "/user/updateUser", user, {"headers": headers});
+        return axios.post(burl + '/user/updateUser', user, {headers: headers});
+    },
+
+    getAllBooks : function() {
+        return axios.post(burl + '/book/getAll', {headers: headers});
+    },
+
+    createBook : function(book) {
+        book.author = localStorage.getItem('token');
+        return axios.post(burl + '/book/create', book, {headers: headers});
     }
 }

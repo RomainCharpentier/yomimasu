@@ -26,6 +26,8 @@ export class Topbar extends React.Component {
             <Nav className="mr-auto">
                 <Nav.Link href="/">Accueil</Nav.Link>
                 <Nav.Link href="/profile">Profil</Nav.Link>
+                <Nav.Link href="/book">Book</Nav.Link>
+                <Nav.Link href="/write">Write</Nav.Link>
                 <Nav.Link href="/signout">Déconnexion</Nav.Link>
             </Nav>
         );

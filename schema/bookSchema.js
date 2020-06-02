@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 var bookSchema = mongoose.Schema({
-	userEmail: {
+	/*userEmail: {
 		type: Schema.ObjectId,
 		ref: 'User',
 		required: true
@@ -9,8 +9,10 @@ var bookSchema = mongoose.Schema({
 	bookId: {
         type: Number,
         required: true
-	},
+	},*/
 	title: String,
+	text: String,
+	author: String,
 	keywords: Array,
 	published: {
 		type: Date,

@@ -14,6 +14,8 @@ export default {
      * @see https://developer.mozilla.org/en-US/docs/Web/API/Blob/Blob
      */
     dataURIToImageFile : (dataUri) => {
+        if (!dataUri || dataUri === undefined) return null;
+
         var split = dataUri.match(/^data:([^;]+)?(?:;base64)?,(.*)/);
         // type MIME
         var mimetype = split[1] || "";

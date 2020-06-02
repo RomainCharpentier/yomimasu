@@ -17,8 +17,9 @@ var userSchema = mongoose.Schema({
 		trim: true
 	},
 	avatar: { 
-		data: Buffer, 
-		contentType: String 
+		type: String,
+		data: Buffer,
+		contentType: String
 	},
 	pseudo: { 
 		type: String,
