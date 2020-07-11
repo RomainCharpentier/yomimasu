@@ -1,20 +1,36 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import {useDropzone} from 'react-dropzone';
 import API from '../utils/API';
 
-export class Write extends React.Component {
+function MyDropzone() {
+    const [files, setFiles] = useState([]);
+    const onDrop = useCallback(acceptedFiles => {
+        // Do something with the files
+        console.log(acceptedFiles);
+        setFiles(acceptedFiles);
+    }, [])
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+  
+    return (
+      <div {...getRootProps()} className='dropzone'>
+        <input {...getInputProps()} />
+        {
+          isDragActive ?
+            <p>Drop the files here ... {files.map(file => <p>{file.name}</p>)}</p> :
+            <p>Drag 'n' drop some files here, or click to select files {files.map(file => <p>{file.name}</p>)}</p>
+        }
+      </div>
+    )
+}
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            title : '',
-            text: ''
-        };
-        this.handleChange.bind(this);
-        this.handleSubmit.bind(this);
-    }
+export const Write = () => {
 
-    handleSubmit = event => {
+    const [title, setTitle] = useState('');
+    const [text, setText] = useState('');
+    const [file, setFile] = useState({type: '', path: ''});
+
+    const handleSubmit = event => {
         if(this.state.title.length === 0){
             return;
         }
@@ -26,29 +42,44 @@ export class Write extends React.Component {
         })
     }
 
-    handleChange = event => {
-        this.setState({
-            [event.target.id]: event.target.value
-        });
+    const handleFileChange = event => {
+        let files = event.target.files;
+        console.log(files);
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+
+        reader.onload = e => {
+            console.log(e.target.result);
+        };
+
+        let reader2 = new FileReader();
+        reader2.readAsText(files[0]);
+        reader2.onload = e => {
+            console.log(e.target.result);
+            setFile({
+                type: '',
+                path: e.target.result
+            })
+        };
     }
     
-    render() {
-        return (
-            <div className='Form'>
-                <FormGroup controlId='title'>
-                    <FormLabel>Titre</FormLabel>
-                    <FormControl as="textarea" onChange={this.handleChange}/>
-                </FormGroup>
+    return (
+        <div className='Form'>
+            <FormGroup controlId='title'>
+                <FormLabel>Titre</FormLabel>
+                <FormControl as="textarea" onChange={e => setTitle(e.target.value)}/>
+            </FormGroup>
 
-                <FormGroup controlId='text'>
-                    <FormLabel>Texte</FormLabel>
-                    <FormControl as="textarea" rows="3" onChange={this.handleChange}/>
-                </FormGroup>
+            <FormGroup controlId='text'>
+                <FormLabel>Texte</FormLabel>
+                <FormControl as="textarea" rows="3" onChange={e => setText(e.target.value)}/>
+            </FormGroup>
 
-                <Button onClick={this.handleSubmit} block type='submit'>
-                    Sauvegarde
-                </Button>
-            </div>
-        );
-    }
+            <MyDropzone />
+
+            <Button onClick={handleSubmit} block type='submit'>
+                Sauvegarde
+            </Button>
+        </div>
+    );
 }

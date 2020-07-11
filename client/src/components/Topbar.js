@@ -7,8 +7,23 @@ export class Topbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAuth : API.isAuth()
+            isAuth : API.isAuth(),
+            searchText: ''
         };
+        this.searchRef = React.createRef();
+        this.handleChange.bind(this);
+        this.handleClick.bind(this);
+    }
+
+    handleChange = event => {
+        this.setState({searchText: event.target.value});
+    }
+
+    handleClick = () => {
+        console.log(this.state.searchText);
+        // Clear the search value (state and input)
+        this.setState({searchText: ''});
+        this.searchRef.current.value = '';
     }
 
     getPublicBar = () => {
@@ -26,7 +41,7 @@ export class Topbar extends React.Component {
             <Nav className="mr-auto">
                 <Nav.Link href="/">Accueil</Nav.Link>
                 <Nav.Link href="/profile">Profil</Nav.Link>
-                <Nav.Link href="/book">Book</Nav.Link>
+                <Nav.Link href="/book_list">Book List</Nav.Link>
                 <Nav.Link href="/write">Write</Nav.Link>
                 <Nav.Link href="/signout">Déconnexion</Nav.Link>
             </Nav>
@@ -49,8 +64,8 @@ export class Topbar extends React.Component {
                 <Navbar.Brand href="/">Navbar</Navbar.Brand>
                 {links}
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-info">Search</Button>
+                    <FormControl ref={this.searchRef} type="text" placeholder="Search" className="mr-sm-2" onChange={this.handleChange} />
+                    <Button variant="outline-info" onClick={this.handleClick}>Search</Button>
                 </Form>
             </Navbar>
         );

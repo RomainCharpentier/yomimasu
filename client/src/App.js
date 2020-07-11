@@ -6,7 +6,7 @@ import { Topbar } from './components/Topbar.js';
 import { Profile } from './components/Profile.js';
 import { Signout } from './components/Signout.js';
 import { PrivateRoute } from './components/PrivateRoute.js';
-import { Book } from './components/Book.js';
+import { BookList } from './components/BookList.js';
 import { Write } from './components/Write.js';
 import { GuestRoute } from './components/GuestRoute.js';
 import { Home } from './components/Home.js';
@@ -24,7 +24,7 @@ class App extends Component {
                 <GuestRoute exact path="/signin" component={Signin}/>
                 <GuestRoute exact path ="/signup" component={Signup}/>
                 <PrivateRoute path='/profile' component={Profile} />
-                <PrivateRoute path='/book' component={Book} />
+                <PrivateRoute path='/book_list' component={BookList} />
                 <PrivateRoute path='/write' component={Write} />
                 <PrivateRoute path='/signout' component={Signout} />
             </Switch>

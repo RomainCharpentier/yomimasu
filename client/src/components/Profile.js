@@ -73,7 +73,7 @@ export class Profile extends React.Component {
             avatar_width: this.state.avatar_width,
             avatar_height: this.state.avatar_height
         };
-        // Appel de la méthode update via API
+        // Calling the update method using API
         API.updateUser(_send).then((data) => {
             // Maj du token
             localStorage.setItem('token', data.data.token);
@@ -113,7 +113,7 @@ export class Profile extends React.Component {
     }
     
     render() {
-        // Message du serveur (erreur ou non)
+        // Message from server (error or not)
         const isError = this.state && this.state.server_message;
         let message = (<Alert variant={isError && this.state.server_message.type}>{isError && this.state.server_message.message}</Alert>);
         return (

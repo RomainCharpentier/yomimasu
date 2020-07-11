@@ -1,22 +1,36 @@
-//Définition des modules
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const prompt = require('prompt');
 
-//Connexion à la base de donnée
+const fs = require('fs'),
+configPath = './config.json';
+
+// Connecting to the database
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useUnifiedTopology', true);
 
-prompt.start();
+try {
+    // Using config.json
+    const configFile = fs.readFileSync(configPath, 'UTF-8');
+    const config = JSON.parse(configFile);
+    runServer(config.username, config.password);
 
-prompt.get(['username', 'password'], function (err, result) {
-    if (err) { 
-        console.log(err); 
-        return 1; 
-    }
-    mongoose.connect('mongodb+srv://'+result.username + ':' + result.password + '@cluster0-q86rq.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }).then(() => {
+} catch (e) {
+    // Using prompt
+    prompt.start();
+    prompt.get(['username', 'password'], function (err, result) {
+        if (err) { 
+            console.log(err); 
+            return 1; 
+        }
+        runServer(result.username, result.password);
+    });
+}
+
+function runServer(username, password) {
+    mongoose.connect('mongodb+srv://'+ username + ':' + password + '@cluster0-q86rq.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }).then(() => {
         console.log('Connected to mongoDB')
     }).catch(e => {
         console.log('Error while DB connecting');
@@ -54,5 +68,4 @@ prompt.get(['username', 'password'], function (err, result) {
     //Définition et mise en place du port d'écoute
     const port = process.env.PORT || 8000;
     app.listen(port, () => console.log(`Listening on port ${port}`));
-
-});
+}
