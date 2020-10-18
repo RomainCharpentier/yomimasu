@@ -23,7 +23,7 @@ export class Signin extends React.Component {
         }
         API.signin(this.state.email, this.state.password).then((data) => {
             localStorage.setItem('token', data.data.token);
-            window.location = '/'
+            window.location = '/';
         }, (error) => {
             console.log(error);
             return;
@@ -39,19 +39,22 @@ export class Signin extends React.Component {
     render() {
         return (
             <div className='Form'>
-                <FormGroup controlId='email'>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl autoFocus type='email' value={this.state.email} onChange={this.handleChange}/>
-                </FormGroup>
-                
-                <FormGroup controlId='password'>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl value={this.state.password} onChange={this.handleChange} type='password'/>
-                </FormGroup>
+                <h1>Connexion</h1>
+                <div>
+                    <FormGroup controlId='email'>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl autoFocus type='email' value={this.state.email} onChange={this.handleChange}/>
+                    </FormGroup>
+                    
+                    <FormGroup controlId='password'>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl value={this.state.password} onChange={this.handleChange} type='password'/>
+                    </FormGroup>
 
-                <Button onClick={this.handleSubmit} block type='submit'>
-                    Connexion
-                </Button>
+                    <Button onClick={this.handleSubmit} block type='submit'>
+                        Connexion
+                    </Button>
+                </div>
             </div>
         );
     }

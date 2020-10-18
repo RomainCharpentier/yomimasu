@@ -113,7 +113,7 @@ module.exports = function (router) {
             } else {
                 res.status(200).json(result);
             }
-        });
+        }).select('-_id -password');
     });
 
     /**

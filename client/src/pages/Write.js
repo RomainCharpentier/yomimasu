@@ -31,10 +31,10 @@ export const Write = () => {
     const [file, setFile] = useState({type: '', path: ''});
 
     const handleSubmit = event => {
-        if(this.state.title.length === 0){
+        if(title.length === 0){
             return;
         }
-        API.createBook(this.state).then((data) => {
+        API.createBook({title: {title}, text: {text}}).then((data) => {
             window.location = '/book';
         }, (error) => {
             console.log(error);
@@ -65,23 +65,25 @@ export const Write = () => {
     
     return (
         <div className='Form'>
-            <h1>Write</h1>
-            
-            <FormGroup controlId='title'>
-                <FormLabel>Titre</FormLabel>
-                <FormControl as="textarea" onChange={e => setTitle(e.target.value)}/>
-            </FormGroup>
+            <div>
+                <h1>Write</h1>
+                
+                <FormGroup controlId='title'>
+                    <FormLabel>Titre</FormLabel>
+                    <FormControl as="textarea" onChange={e => setTitle(e.target.value)}/>
+                </FormGroup>
 
-            <FormGroup controlId='text'>
-                <FormLabel>Texte</FormLabel>
-                <FormControl as="textarea" rows="3" onChange={e => setText(e.target.value)}/>
-            </FormGroup>
+                <FormGroup controlId='text'>
+                    <FormLabel>Texte</FormLabel>
+                    <FormControl as="textarea" rows="3" onChange={e => setText(e.target.value)}/>
+                </FormGroup>
 
-            <MyDropzone />
+                <MyDropzone />
 
-            <Button onClick={handleSubmit} block type='submit'>
-                Sauvegarde
-            </Button>
+                <Button onClick={handleSubmit} block type='submit'>
+                    Sauvegarde
+                </Button>
+            </div>
         </div>
     );
 }

@@ -1,0 +1,13 @@
+.users-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.users-table {
+    flex: 0.3;
+}
+
+#bootstrap-overrides .users-line {
+    flex: 1;
+    vertical-align: middle;
+}

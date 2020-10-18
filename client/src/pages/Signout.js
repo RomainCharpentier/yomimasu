@@ -4,13 +4,13 @@ import API from '../utils/API';
 export class Signout extends React.Component {
 
     constructor(props) {
-        super(props);
+        super();
         API.signout();
     }
     
     render() {
         return (
-            <div>ss</div>
+            <div></div>
         );
     }
 }
