@@ -3,7 +3,7 @@ const passwordHash = require('password-hash');
 const jwt = require('jwt-simple');
 const config = require('../config/config.js');
 
-var userSchema = mongoose.Schema({
+var userModel = mongoose.Schema({
 	email: {
 		type: String,
 		lowercase: true,
@@ -27,7 +27,7 @@ var userSchema = mongoose.Schema({
 	}
 },{ timestamps: { createdAt: "created_at" }});
 
-userSchema.methods = {
+userModel.methods = {
 	authenticate: function (password) {
 		return passwordHash.verify(password, this.password);
 	},
@@ -36,10 +36,10 @@ userSchema.methods = {
 	}
 }
 
-userSchema.statics = {
+userModel.statics = {
 	getUser: function (token) {
 		return jwt.decode(token, config.secret);
 	}
 }
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userModel);

@@ -5,7 +5,7 @@ import API from '../utils/API';
 export class Signin extends React.Component {
 
     constructor(props) {
-        super(props);
+        super();
         this.state = {
             email : '',
             password: ''

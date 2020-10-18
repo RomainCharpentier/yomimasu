@@ -65,6 +65,8 @@ export const Write = () => {
     
     return (
         <div className='Form'>
+            <h1>Write</h1>
+            
             <FormGroup controlId='title'>
                 <FormLabel>Titre</FormLabel>
                 <FormControl as="textarea" onChange={e => setTitle(e.target.value)}/>

@@ -31,6 +31,10 @@ export default {
         return axios.post(burl + '/user/getUser', {'token': token}, {headers: headers});
     },
 
+    getUsers : function(token) {
+        return axios.get(burl + '/user/getUsers', {}, {headers: headers});
+    },
+
     updateUser : function(user) {
         return axios.post(burl + '/user/updateUser', user, {headers: headers});
     },

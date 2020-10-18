@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Signin } from './components/Signin.js';
-import { Signup } from './components/Signup.js';
+import { GuestRoute } from './routes/GuestRoute.js';
+import { PrivateRoute } from './routes/PrivateRoute.js';
 import { Topbar } from './components/Topbar.js';
-import { Profile } from './components/Profile.js';
-import { Signout } from './components/Signout.js';
-import { PrivateRoute } from './components/PrivateRoute.js';
-import { BookList } from './components/BookList.js';
-import { Write } from './components/Write.js';
-import { GuestRoute } from './components/GuestRoute.js';
-import { Home } from './components/Home.js';
+import { Signin } from './pages/Signin.js';
+import { Signup } from './pages/Signup.js';
+import { Profile } from './pages/Profile.js';
+import { Signout } from './pages/Signout.js';
+import { BookList } from './pages/BookList.js';
+import { Write } from './pages/Write.js';
+import { Home } from './pages/Home.js';
+import { Users } from './pages/Users.js';
 import './App.css';
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
                 <PrivateRoute path='/profile' component={Profile} />
                 <PrivateRoute path='/book_list' component={BookList} />
                 <PrivateRoute path='/write' component={Write} />
+                <PrivateRoute path='/users' component={Users} />
                 <PrivateRoute path='/signout' component={Signout} />
             </Switch>
         </div>

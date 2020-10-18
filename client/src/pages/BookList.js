@@ -1,12 +1,12 @@
 import React from 'react';
 import API from '../utils/API';
 import { Alert } from 'react-bootstrap';
-import { Book } from './Book.js';
+import { Book } from '../components/Book.js';
 
 export class BookList extends React.Component {
     
     constructor(props){
-        super(props);
+        super();
         this.displayList.bind(this);
     }
 
@@ -39,7 +39,7 @@ export class BookList extends React.Component {
             <div className='Form'>
                 {isError && message}
                 <h1>Book List</h1>
-                { this.state && this.displayList() }
+                { this.state && this.state.books && this.displayList() }
             </div>
         );
     }

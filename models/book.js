@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-var bookSchema = mongoose.Schema({
+var bookModel = mongoose.Schema({
 	/*userEmail: {
 		type: Schema.ObjectId,
 		ref: 'User',
@@ -20,4 +20,4 @@ var bookSchema = mongoose.Schema({
 	}
 },{ timestamps: { createdAt: "created_at" }});
 
-module.exports = mongoose.model("Book", bookSchema);
+module.exports = mongoose.model("Book", bookModel);

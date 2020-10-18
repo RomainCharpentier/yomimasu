@@ -30,7 +30,7 @@ try {
 }
 
 function runServer(username, password) {
-    mongoose.connect('mongodb+srv://'+ username + ':' + password + '@cluster0-q86rq.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }).then(() => {
+    mongoose.connect('mongodb+srv://'+ username + ':' + password + '@cluster0.xjnrs.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }).then(() => {
         console.log('Connected to mongoDB')
     }).catch(e => {
         console.log('Error while DB connecting');
@@ -40,7 +40,7 @@ function runServer(username, password) {
     //On définit notre objet express nommé app
     const app = express();
 
-    //Body Parser
+    //Defining the Middleware
     var urlencodedParser = bodyParser.urlencoded({
         extended: true
     });
@@ -48,7 +48,7 @@ function runServer(username, password) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
 
-    //Définition des CORS
+    //Defining the CORS
     app.use(function (req, res, next) {
         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -57,7 +57,7 @@ function runServer(username, password) {
         next();
     });
 
-    //Définition du routeur
+    //Defining the router
     var router = express.Router();
     app.use('/user', router);
     require(__dirname + '/controllers/userController')(router);
@@ -65,7 +65,7 @@ function runServer(username, password) {
     app.use('/book', router);
     require(__dirname + '/controllers/bookController')(router);
 
-    //Définition et mise en place du port d'écoute
+    //Listining
     const port = process.env.PORT || 8000;
     app.listen(port, () => console.log(`Listening on port ${port}`));
 }

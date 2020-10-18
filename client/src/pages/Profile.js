@@ -1,13 +1,13 @@
 import React from 'react';
 import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
-import { Button, FormGroup, FormControl, FormLabel, Image, Alert } from 'react-bootstrap';
-import { ImageInput } from './ImageInput.js';
+import { Button, FormGroup, FormControl, FormLabel, Image, Alert, Form } from 'react-bootstrap';
+import { ImageInput } from '../components/ImageInput.js';
 
 export class Profile extends React.Component {
     
     constructor(props){
-        super(props);
+        super();
         this.handleChange.bind(this);
         this.handleSubmit.bind(this);
         this.displayForm.bind(this);
@@ -18,8 +18,8 @@ export class Profile extends React.Component {
         const self = this;
         var token = localStorage.getItem('token');
         API.getUser(token).then((data) => {
-            const user = data.data.user;
-            // Conversion de l'image
+            const user = data.data;
+            // Convert the image
             const image_file = ImageConverter.dataURIToImageFile(user.avatar);
             self.setState({
                 email: user.email,
@@ -75,7 +75,7 @@ export class Profile extends React.Component {
         };
         // Calling the update method using API
         API.updateUser(_send).then((data) => {
-            // Maj du token
+            // Update the token
             localStorage.setItem('token', data.data.token);
             this.setState({
                 default_avatar: this.state.avatar_image,
@@ -83,10 +83,10 @@ export class Profile extends React.Component {
             });
             /* event.target.value = null; */
         }, (error) => {
-            console.log(error.response);
+            console.log(error);
             this.setState({
                 avatar_image: this.state.default_avatar,
-                server_message: error.response.data.message
+                server_message: error
             });
             /* event.target.value = null; */
             return;
@@ -96,9 +96,16 @@ export class Profile extends React.Component {
     displayForm() {
         return (
             <div>
-                <p>{this.state.email}</p>
-                <ImageInput action={this.handleFileChange} />
                 <Image src={this.state.avatar_image} />
+                <ImageInput action={this.handleFileChange} />
+
+                <FormGroup controlId='email'>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl type='text' value={this.state.email} disabled />
+                    <Form.Text className="text-muted">
+                        Votre adresse email ne peut être modifiée car elle vous sert d'identifiant.
+                    </Form.Text>
+                </FormGroup>
 
                 <FormGroup controlId='pseudo'>
                     <FormLabel>Pseudo</FormLabel>
@@ -115,7 +122,7 @@ export class Profile extends React.Component {
     render() {
         // Message from server (error or not)
         const isError = this.state && this.state.server_message;
-        let message = (<Alert variant={isError && this.state.server_message.type}>{isError && this.state.server_message.message}</Alert>);
+        let message = (<Alert variant={isError && 'danger'}>{isError && this.state.server_message.message}</Alert>);
         return (
             <div className='Form'>
                 {isError && message}

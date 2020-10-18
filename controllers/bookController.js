@@ -1,21 +1,24 @@
-const Book = require('../schema/bookSchema.js');
-const User = require('../schema/userSchema.js');
+const Book = require('../models/book.js');
 
-module.exports = function (app) {
-    app.post('/getAll', function(req, res) {
+module.exports = function (router) {
+
+    /**
+     * POST Method : Return all the books
+     */
+    router.post('/getAll', function(req, res) {
         Book.find({}, (err, books) => {
-            var bookMap = [];
-            books.forEach((book) => {
-                bookMap.push(book);
-            });
-            res.status(200).json({
-                books: bookMap,
-                text: "Succès"
-            });
+            if (err) {
+                res.status(500);
+            } else {
+                res.status(200).json(books);
+            }
         });
     });
     
-    app.post('/create', function(req, res) {
+    /**
+     * POST Method : Create a book
+     */
+    router.post('/create', function(req, res) {
         var book = {
             title: req.body.title,
             text: req.body.text,
@@ -24,13 +27,9 @@ module.exports = function (app) {
         var _b = new Book(book);
         _b.save((err, book) => {
             if (err) {
-                res.status(500).json({
-                    text: "Erreur interne"
-                });
+                res.status(500);
             } else {
-                res.status(200).json({
-                    text: "Succès"
-                });
+                res.status(200);
             }
         });
     });

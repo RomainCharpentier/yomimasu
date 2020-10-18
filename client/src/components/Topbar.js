@@ -43,6 +43,7 @@ export class Topbar extends React.Component {
                 <Nav.Link href="/profile">Profil</Nav.Link>
                 <Nav.Link href="/book_list">Book List</Nav.Link>
                 <Nav.Link href="/write">Write</Nav.Link>
+                <Nav.Link href="/users">Users</Nav.Link>
                 <Nav.Link href="/signout">Déconnexion</Nav.Link>
             </Nav>
         );
