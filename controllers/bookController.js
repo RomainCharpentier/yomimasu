@@ -1,4 +1,5 @@
 const Book = require('../models/book.js');
+const User = require('../models/user.js');
 
 module.exports = function (router) {
 

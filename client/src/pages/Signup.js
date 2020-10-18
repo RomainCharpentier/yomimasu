@@ -7,7 +7,7 @@ import DefaultAvatar from '../images/default_avatar.png';
 export class Signup extends React.Component {
 
     constructor(props) {
-        super(props);
+        super();
         this.state = {
             email : '',
             password: '',
@@ -47,24 +47,27 @@ export class Signup extends React.Component {
     render() {
         return (
             <div className='Form'>
-                <FormGroup controlId='email'>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl autoFocus type='email' value={this.state.email} onChange={this.handleChange}/>
-                </FormGroup>
+                <h1>Inscription</h1>
+                <div>
+                    <FormGroup controlId='email'>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl autoFocus type='email' value={this.state.email} onChange={this.handleChange}/>
+                    </FormGroup>
 
-                <FormGroup controlId='password'>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl value={this.state.password} onChange={this.handleChange} type='password'/>
-                </FormGroup>
+                    <FormGroup controlId='password'>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl value={this.state.password} onChange={this.handleChange} type='password'/>
+                    </FormGroup>
 
-                <FormGroup controlId='cpassword'>
-                    <FormLabel>Confirm Password</FormLabel>
-                    <FormControl value={this.state.cpassword} onChange={this.handleChange} type='password'/>
-                </FormGroup>
+                    <FormGroup controlId='cpassword'>
+                        <FormLabel>Confirm Password</FormLabel>
+                        <FormControl value={this.state.cpassword} onChange={this.handleChange} type='password'/>
+                    </FormGroup>
 
-                <Button onClick={this.handleSubmit} block type='submit'>
-                    Inscription
-                </Button>
+                    <Button onClick={this.handleSubmit} block type='submit'>
+                        Inscription
+                    </Button>
+                </div>
             </div>
         );
     }

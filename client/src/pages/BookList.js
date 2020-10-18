@@ -13,7 +13,7 @@ export class BookList extends React.Component {
     componentDidMount() {
         const self = this;
         API.getAllBooks().then((data) => {
-            const booksArray = data.data.books;
+            const booksArray = data.data;
             self.setState({
                 books: booksArray
             });
