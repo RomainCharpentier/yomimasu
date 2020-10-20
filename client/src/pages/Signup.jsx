@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import API from '../utils/API';
-import ImageConverter from '../utils/ImageConverter';
 import DefaultAvatar from '../images/default_avatar.png';
 
 export class Signup extends React.Component {
@@ -31,7 +30,7 @@ export class Signup extends React.Component {
         };
         API.signup(_send).then((data) => {
             localStorage.setItem('token', data.data.token);
-            window.location = '/dashboard';
+            window.location = '/';
         }, (error) => {
             console.log(error);
             return;

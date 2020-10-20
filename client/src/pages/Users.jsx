@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Image } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
 import './Users.css';

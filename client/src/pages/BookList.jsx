@@ -1,7 +1,7 @@
 import React from 'react';
 import API from '../utils/API';
 import { Alert } from 'react-bootstrap';
-import { Book } from '../components/Book.js';
+import { Book } from '../components/Book.jsx';
 
 export class BookList extends React.Component {
     

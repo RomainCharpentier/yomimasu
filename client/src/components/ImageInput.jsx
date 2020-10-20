@@ -1,10 +1,10 @@
 import React from 'react';
-import { FormGroup, FormControl, Image } from "react-bootstrap";
+import { FormGroup, FormControl } from "react-bootstrap";
 
 export class ImageInput extends React.Component {
 
     constructor(props) {
-        super(props);
+        super();
     }
 
     render() {

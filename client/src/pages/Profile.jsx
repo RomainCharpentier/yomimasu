@@ -2,7 +2,7 @@ import React from 'react';
 import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
 import { Button, FormGroup, FormControl, FormLabel, Image, Alert, Form } from 'react-bootstrap';
-import { ImageInput } from '../components/ImageInput.js';
+import { ImageInput } from '../components/ImageInput.jsx';
 
 export class Profile extends React.Component {
     
