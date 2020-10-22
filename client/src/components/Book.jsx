@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 export const Book = props => {
     
@@ -14,4 +15,9 @@ export const Book = props => {
             </Card.Body>
         </Card>
     );
+}
+
+Book.PropTypes = {
+    title: PropTypes.string,
+    text: PropTypes.string
 }

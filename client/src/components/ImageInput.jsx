@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormGroup, FormControl } from "react-bootstrap";
+import PropTypes from 'prop-types';
 
 export class ImageInput extends React.Component {
 
@@ -18,4 +19,8 @@ export class ImageInput extends React.Component {
 
 ImageInput.defaultProps = {
     action: ""
+}
+
+ImageInput.propTypes = {
+    action: PropTypes.func
 }

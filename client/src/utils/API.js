@@ -22,6 +22,11 @@ export default {
         return (localStorage.getItem('token') !== null);
     },
     
+    isAdmin : async function() {
+        let user = await getUser(localStorage.getItem('token'));
+        return user && user.role === 'admin';
+    },
+    
     signout : function() {
         localStorage.clear();
         window.location.href = '/';

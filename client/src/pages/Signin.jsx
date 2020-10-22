@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import API from '../utils/API';
+import PropTypes from 'prop-types';
 
 export class Signin extends React.Component {
 

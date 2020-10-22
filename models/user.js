@@ -16,6 +16,11 @@ var userModel = mongoose.Schema({
         required: true,
 		trim: true
 	},
+	role: {
+        type: String,
+        default: "user",
+        enum: ["user", "admin"]
+    },
 	avatar: { 
 		type: String,
 		data: Buffer,

@@ -1,33 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
-import {useDropzone} from 'react-dropzone';
 import useAPIError from '../hooks/useAPIError';
+import DropZone from '../components/Dropzone';
 import API from '../utils/API';
 
 const writeMode = {
     FILE: 'file',
     TEXT: 'text'
-}
-
-function MyDropzone() {
-    const [files, setFiles] = useState([]);
-    const onDrop = useCallback(acceptedFiles => {
-        // Do something with the files
-        console.log(acceptedFiles);
-        setFiles(acceptedFiles);
-    }, [])
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-  
-    return (
-      <div {...getRootProps()} className='dropzone'>
-        <input {...getInputProps()} />
-        {
-          isDragActive ?
-            <p>Drop the files here ... {files.map(file => <p>{file.name}</p>)}</p> :
-            <p>Drag 'n' drop some files here, or click to select files {files.map(file => <p>{file.name}</p>)}</p>
-        }
-      </div>
-    )
 }
 
 export const Write = () => {
@@ -83,7 +62,7 @@ export const Write = () => {
     const renderSwitch = () => {
         switch (mode) {
             case writeMode.FILE:
-                return <MyDropzone />;
+                return <DropZone />;
             case writeMode.TEXT:
                 return (
                     <div>
@@ -106,7 +85,7 @@ export const Write = () => {
     return (
         <div className='Form'>
             <h1>Write</h1>
-            {Object.entries(writeMode).map(([key, value]) => <Button key={key} onClick={e => setMode(value)} disabled={mode===value}>{key}</Button>)}
+            {Object.entries(writeMode).map(([key, value]) => <Button key={key} onClick={e => setMode(value)} disabled={mode===value}>{value}</Button>)}
             {renderSwitch()}
             <Button onClick={handleSubmit} block type='submit'>
                 Sauvegarde
