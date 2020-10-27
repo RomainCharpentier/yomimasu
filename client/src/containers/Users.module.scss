@@ -1,13 +1,15 @@
-.users-container {
+@import '../common.scss';
+
+.usersContainer {
     display: flex;
     flex-direction: column;
 }
 
-.users-table {
+.usersTable {
     flex: 0.3;
 }
 
-#bootstrap-overrides .users-line {
+#bootstrap-overrides .usersLine {
     flex: 1;
     vertical-align: middle;
 }

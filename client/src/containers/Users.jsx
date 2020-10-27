@@ -3,7 +3,7 @@ import { Image } from 'react-bootstrap';
 import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
 import Pagination from '../components/Pagination'
-import './Users.css';
+import styles from "./Users.module.scss";
 
 export const Users = () => {
     const [users, setUsers] = useState([]);
@@ -40,9 +40,9 @@ export const Users = () => {
 
     return (
         <Pagination items={users} itemsPerPage={1} refreshPage={() => console.log('refresh')}>
-            <div className='users-container'>
+            <div className={styles.usersContainer}>
                 <h1>Utilisateurs</h1>
-                <table className='table table-hover users-table'>
+                <table className={styles.table, styles.tableHover, styles.usersTable}>
                     <thead>
                         <tr>
                             <th>#</th>

@@ -82,6 +82,6 @@ code {
     }
 }
 
-.draw-border {
+.draw_border {
     @include btn-border-drawing(#000, #58afd1, 4px, bottom, right);
 }
