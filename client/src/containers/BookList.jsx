@@ -1,12 +1,13 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Book from '../components/Book.jsx';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { getVisibleBooks } from '../selectors';
 import { Button } from 'react-bootstrap';
 import * as action from '../constants/ActionTypes';
+import { itemsFetchData } from '../constants/BookAction';
 
-const BookList = ({ books }) => {
+const BookList = ({ books, fetchData, hasError, isLoading }) => {
     const dispatch = useDispatch();
     const onAdd = useCallback(
         () => {
@@ -14,6 +15,20 @@ const BookList = ({ books }) => {
         },
         [dispatch],
     );
+
+    useEffect(() => {
+        dispatch(itemsFetchData('book/getAll'));
+    }, [fetchData]);
+
+    
+    if (hasError) {
+        return <p>Sorry! There was an error loading the items</p>;
+    }
+
+    if (isLoading) {
+        return <p>Loading…</p>;
+    }
+
     return (
         <>
         <div style={{display: 'flex'}}>
@@ -36,8 +51,8 @@ BookList.propTypes = {
 }
 
 const BookListStore = () => {
-    const books = useSelector(getVisibleBooks);
-    return <BookList books={books} />
+    const state = useSelector(getVisibleBooks);
+    return <BookList {...state} />
 }
 
 export default BookListStore;
