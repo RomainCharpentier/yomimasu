@@ -1,61 +1,27 @@
-import * as types from './ActionTypes';
-import axios from 'axios';
-const headers = {
-    'Content-Type': 'application/json'
-};
+import {createAction} from '@reduxjs/toolkit';
 
-const burl = 'http://localhost:8000';
+export const getBooks = createAction('GET_BOOKS', filters =>
+    filters ? {payload: {params: {...filters}}} : {}
+);
+export const getBooksSuccess = createAction('GET_BOOKS_SUCCESS');
+export const getBooksError = createAction('GET_BOOKS_ERROR');
 
-export function itemsHaveError(bool) {
-    return {
-        type: 'ITEMS_HAVE_ERROR',
-        hasError: bool
-    };
-}
+export const getBook = createAction('GET_BOOK', id => ({payload: {id}}));
+export const getBookSuccess = createAction('GET_BOOK_SUCCESS');
+export const getBookError = createAction('GET_BOOK_ERROR');
 
-export function itemsAreLoading(bool) {
-    return {
-        type: 'ITEMS_ARE_LOADING',
-        isLoading: bool
-    };
-}
+export const addBook = createAction('ADD_BOOK', book => ({
+    payload: {data: {...book, completed: false}}
+}));
+export const addBookSuccess = createAction('ADD_BOOK_SUCCESS');
+export const addBookError = createAction('ADD_BOOK_ERROR');
 
-export function itemsFetchDataSuccess(items) {
-    return {
-        type: 'ITEMS_FETCH_DATA_SUCCESS',
-        items
-    };
-}
-export const addBook = (text, cat = 'default') => ({
-	type: types.ADD_BOOK,
-	text,
-	cat,
-});
-export const removeBook = (id, cat) => ({
-	type: types.REMOVE_BOOK,
-	id,
-	cat
-});
-export const setVisibilityFilter = (filter) => ({
-	type: types.SET_VISIBILITY_FILTER,
-	filter
-});
+export const updateBook = createAction('UPDATE_BOOK', (id, book) => ({
+    payload: {id, data: book}
+}));
+export const updateBookSuccess = createAction('UPDATE_BOOK_SUCCESS');
+export const updateBookError = createAction('UPDATE_BOOK_ERROR');
 
-export function itemsFetchData(url) {
-    return (dispatch) => {
-        dispatch(itemsAreLoading(true));
-
-        axios.post(`${burl}/${url}`, {headers: headers})
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw Error(response.statusText);
-                }
-
-                dispatch(itemsAreLoading(false));
-
-                return response;
-            })
-            .then((response) => dispatch(itemsFetchDataSuccess(response.data)))
-            .catch(() => dispatch(itemsHaveError(true)));
-    };
-}
+export const deleteBook = createAction('DELETE_BOOK', id => ({payload: {id}}));
+export const deleteBookSuccess = createAction('DELETE_BOOK_SUCCESS');
+export const deleteBookError = createAction('DELETE_BOOK_ERROR');

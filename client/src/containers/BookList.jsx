@@ -6,20 +6,21 @@ import { getVisibleBooks } from '../selectors';
 import { Button } from 'react-bootstrap';
 import * as action from '../constants/ActionTypes';
 import { itemsFetchData } from '../constants/BookAction';
+import {api} from 'redux-rest-actions';
 
 const BookList = ({ books, fetchData, hasError, isLoading }) => {
     const dispatch = useDispatch();
     const onAdd = useCallback(
         () => {
+            console.log('onAdd');
             dispatch({ type: action.ADD_BOOK })
         },
         [dispatch],
     );
 
     useEffect(() => {
-        dispatch(itemsFetchData('book/getAll'));
+        dispatch({ type: action.GET_BOOKS });
     }, [fetchData]);
-
     
     if (hasError) {
         return <p>Sorry! There was an error loading the items</p>;
@@ -51,8 +52,10 @@ BookList.propTypes = {
 }
 
 const BookListStore = () => {
-    const state = useSelector(getVisibleBooks);
-    return <BookList {...state} />
+    const dispatch = useDispatch();
+    dispatch({ type: 'GET_ALL' })
+    //const state = useSelector(getVisibleBooks);
+    return <BookList books={useSelector(state => state.list.books)} />
 }
 
 export default BookListStore;

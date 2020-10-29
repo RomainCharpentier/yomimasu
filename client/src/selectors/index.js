@@ -7,13 +7,15 @@ import {
     SHOW_ACTIVE
 } from '../constants/BookFilters'
 
-const getVisibilityFilter = state => state.visibilityFilter;
+const getFilter = state => state.filter;
 const getBooks = state => state.books;
 
 export const getVisibleBooks = createSelector(
-    [getVisibilityFilter, getBooks],
-    (visibilityFilter, books) => {
-        switch (visibilityFilter) {
+    [getFilter, getBooks],
+    (filter, books) => {
+        switch (filter) {
+            case undefined:
+            case 'ALL':
             case SHOW_ALL:
                 return books
             case SHOW_COMPLETED:
@@ -21,7 +23,7 @@ export const getVisibleBooks = createSelector(
             case SHOW_ACTIVE:
                 return books.filter(t => !t.completed)
             default:
-                throw new Error('Unknown filter: ' + visibilityFilter)
+                throw new Error('Unknown filter: ' + filter)
         }
     }
 );
