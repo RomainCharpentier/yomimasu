@@ -1,46 +1,44 @@
 import React from 'react';
-import API from '../utils/API';
-import { Alert } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
 import { Book } from '../components/Book.jsx';
+import { useAppContext } from '../AppContext';
+import PropTypes from 'prop-types';
 
-export class BookList extends React.Component {
-    
-    constructor(props){
-        super();
-        this.displayList.bind(this);
-    }
-
-    componentDidMount() {
-        const self = this;
-        API.getAllBooks().then((data) => {
-            const booksArray = data.data;
-            self.setState({
-                books: booksArray
-            });
-        }, (error) => {
-            console.log(error);
-        });
-    }
-
-    displayList() {
-        const listItems = this.state.books.map((book) => <Book {...book} />);
-        return (
-            <div className='flex-container'>
-                {listItems}
+const BookList = ({ books }) => {
+    /* const dispatch = useDispatch();
+    const onAdd = useCallback(
+        () => {
+            dispatch({ type: action.ADD_BOOK })
+        },
+        [dispatch],
+    ); */
+    return (
+        <>
+            <div style={{ display: 'flex' }}>
+                {books.map(book =>
+                    <Book key={book.id} {...book} />
+                )}
             </div>
-        );
-    }
-    
-    render() {
-        // Message from server (error or not)
-        const isError = this.state && this.state.server_message;
-        let message = (<Alert variant={isError && this.state.server_message.type}>{isError && this.state.server_message.message}</Alert>);
-        return (
-            <div className='Form'>
-                {isError && message}
-                <h1>Book List</h1>
-                { this.state && this.state.books && this.displayList() }
-            </div>
-        );
-    }
+
+            <Button onClick={() => console.log('add')}>Add</Button>
+        </>
+    )
+};
+
+BookList.propTypes = {
+    books: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        completed: PropTypes.bool.isRequired,
+        text: PropTypes.string.isRequired
+    }).isRequired).isRequired,
 }
+
+const BookListStore = () => {
+    const {
+        state: { tasks },
+        actions: { addTask, removeTask },
+    } = useAppContext();
+    return <BookList books={Object.entries(tasks)} />
+}
+
+export default BookListStore;

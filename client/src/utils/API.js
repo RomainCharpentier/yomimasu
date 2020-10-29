@@ -19,7 +19,9 @@ export default {
     },
     
     isAuth : function() {
-        return (localStorage.getItem('token') !== null);
+        return true;
+        //FIXME: Test
+        //return (localStorage.getItem('token') !== null);
     },
     
     isAdmin : async function() {

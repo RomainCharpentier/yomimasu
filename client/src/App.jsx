@@ -9,7 +9,7 @@ import { Signin } from './pages/Signin.jsx';
 import { Signup } from './pages/Signup.jsx';
 import { Profile } from './pages/Profile.jsx';
 import { Signout } from './pages/Signout.jsx';
-import { BookList } from './pages/BookList.jsx';
+import BookListStore from './pages/BookList.jsx';
 import { Write } from './pages/Write.jsx';
 import { Home } from './pages/Home.jsx';
 import { Users } from './pages/Users.jsx';
@@ -28,7 +28,7 @@ class App extends Component {
                             <GuestRoute exact path="/signin" component={Signin}/>
                             <GuestRoute exact path ="/signup" component={Signup}/>
                             <PrivateRoute path='/profile' component={Profile} />
-                            <PrivateRoute path='/book_list' component={BookList} />
+                            <PrivateRoute path='/book_list' component={BookListStore} />
                             <PrivateRoute path='/write' component={Write} />
                             <PrivateRoute path='/users' component={Users} />
                             <PrivateRoute path='/signout' component={Signout} />
