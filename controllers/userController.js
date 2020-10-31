@@ -7,8 +7,8 @@ module.exports = function (router) {
      * POST Method : Sign up an user (Create)
      */
     router.post('/signup', function(req, res) {
-        if (!req.body.email || !req.body.password) {
-            // Le cas où l'email ou bien le password ne serait pas soumis ou nul
+        if (!req.body.email || !req.body.password || !req.body.nickname) {
+            // Le cas où l'email ou bien le password ou pseudo ne serait pas soumis ou nul
             res.status(400).json({
                 text: "Requête invalide"
             });
@@ -17,6 +17,7 @@ module.exports = function (router) {
             var user = {
                 email: req.body.email,
                 password: passwordHash.generate(req.body.password),
+                nickname: req.body.nickname,
                 avatar: req.body.avatar
             };
     
@@ -137,6 +138,18 @@ module.exports = function (router) {
             });
         } else {
             res.status(400).json({error: "L'avatar doit avoir une dimension max 300x300"});
+        }
+    });
+
+    /**
+     * GET Method : Return an user based on nickname
+     */
+    router.get('/findUserByNickname', function(req, res) {
+        var user = User.getUser(req.body.token);
+        if (user) {
+            res.status(200).json(user);
+        } else {
+            res.status(500);
         }
     });
 }

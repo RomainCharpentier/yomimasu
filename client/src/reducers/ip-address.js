@@ -8,17 +8,17 @@ export default function ipAddress(state = initialState, action) {
         case 'IP_REQUEST':
             return {
                 value: '',
-                    loading: true,
+                loading: true,
             };
         case 'IP_RECEIVE':
             return {
                 value: action.ip,
-                    loading: false,
+                loading: false,
             };
         case 'IP_RESET':
             return {
                 value: '',
-                    loading: false,
+                loading: false,
             };
         default:
             return state;

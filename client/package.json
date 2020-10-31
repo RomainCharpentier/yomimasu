@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "axios": "^0.19.2",
+    "base64-inline-loader": "^1.1.1",
     "bootstrap": "^4.5.3",
+    "browser-image-compression": "^1.0.12",
     "fs": "0.0.1-security",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",

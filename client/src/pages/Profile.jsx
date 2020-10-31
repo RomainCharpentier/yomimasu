@@ -3,15 +3,17 @@ import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
 import { Button, FormGroup, FormControl, FormLabel, Image, Alert, Form } from 'react-bootstrap';
 import { ImageInput } from '../components/ImageInput.jsx';
+import imageCompression from 'browser-image-compression'
 
 export class Profile extends React.Component {
-    
-    constructor(props){
+
+    constructor(props) {
         super();
         this.handleChange.bind(this);
         this.handleSubmit.bind(this);
         this.displayForm.bind(this);
         this.handleFileChange.bind(this);
+        this.handleKeyDown.bind(this);
     }
 
     componentDidMount() {
@@ -23,7 +25,7 @@ export class Profile extends React.Component {
             const image_file = ImageConverter.dataURIToImageFile(user.avatar);
             self.setState({
                 email: user.email,
-                pseudo: user.pseudo,
+                nickname: user.nickname,
                 avatar: user.avatar,
                 avatar_width: 1,
                 avatar_height: 1,
@@ -38,36 +40,54 @@ export class Profile extends React.Component {
     handleFileChange = event => {
         delete this.state.server_message;
         this.setState(this.state);
-        var file = event.target.files[0];
-
-        // get data
-        var callback = (image, dataURI) => {
-            this.setState({
-                avatar: dataURI,
-                avatar_width: image.naturalWidth,
-                avatar_height: image.naturalHeight,
-                avatar_image: ImageConverter.dataURIToImageFile(dataURI)
-            });
-            return ImageConverter.dataURIToImageFile(dataURI);
+        var imageFile = event.target.files[0];
+        var options = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 300,
+            useWebWorker: true
         };
-        callback.bind(this);
-        ImageConverter.fileToDataURL(file, callback);
+        imageCompression(imageFile, options)
+            .then((compressedFile) => {
+
+                var callback = (image, dataURI) => {
+                    this.setState({
+                        avatar: dataURI,
+                        avatar_width: image.naturalWidth,
+                        avatar_height: image.naturalHeight,
+                        avatar_image: ImageConverter.dataURIToImageFile(dataURI)
+                    });
+                    return ImageConverter.dataURIToImageFile(dataURI);
+                };
+                callback.bind(this);
+                return ImageConverter.fileToDataURL(compressedFile, callback);
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
     }
-    
+
     handleChange = event => {
         // On efface le message du serveur
         delete this.state.server_message;
+        delete this.state.server_status;
         this.setState(this.state);
         this.setState({
             [event.target.id]: event.target.value
         });
     }
 
+    handleKeyDown = event => {
+        // If the key is Enter
+        if (event.key === 'Enter') {
+            this.handleSubmit();
+        }
+    }
+
     handleSubmit = event => {
         var _send = {
             user: {
                 email: this.state.email,
-                pseudo: this.state.pseudo,
+                nickname: this.state.nickname,
                 avatar: this.state.avatar
             },
             avatar_width: this.state.avatar_width,
@@ -79,13 +99,15 @@ export class Profile extends React.Component {
             localStorage.setItem('token', data.data.token);
             this.setState({
                 default_avatar: this.state.avatar_image,
-                server_message: data.data.message
+                server_status: data.status
             });
+            console.log(data);
             /* event.target.value = null; */
         }, (error) => {
             console.log(error);
             this.setState({
                 avatar_image: this.state.default_avatar,
+                server_status: error.status,
                 server_message: error
             });
             /* event.target.value = null; */
@@ -107,9 +129,9 @@ export class Profile extends React.Component {
                     </Form.Text>
                 </FormGroup>
 
-                <FormGroup controlId='pseudo'>
+                <FormGroup controlId='nickname'>
                     <FormLabel>Pseudo</FormLabel>
-                    <FormControl type='text' value={this.state.pseudo} onChange={this.handleChange} />
+                    <FormControl type='text' value={this.state.nickname} onChange={this.handleChange} onKeyDown={this.handleKeyDown} />
                 </FormGroup>
 
                 <Button onClick={this.handleSubmit} block type='submit'>
@@ -118,16 +140,27 @@ export class Profile extends React.Component {
             </div>
         );
     }
-    
+
+    createAlert(status, message) {
+        let variant = 'success';
+        let content = 'Modification réussie.';
+        if (status != 200) {
+            variant = 'danger';
+            content = message;
+        }
+        return <Alert variant={variant}>{content}</Alert>;
+    }
+
     render() {
         // Message from server (error or not)
-        const isError = this.state && this.state.server_message;
-        let message = (<Alert variant={isError && 'danger'}>{isError && this.state.server_message.message}</Alert>);
+        const isAlert = this.state && this.state.server_status;
+        console.log(this.state && this.state.server_message);
+        let alert = isAlert && this.createAlert(this.state.server_status, this.state.server_message);
         return (
             <div className='Form'>
-                {isError && message}
+                {isAlert && alert}
                 <h1>Profil</h1>
-                { this.state && this.displayForm() }
+                { this.state && this.displayForm()}
             </div>
         );
     }

@@ -26,8 +26,9 @@ var userModel = mongoose.Schema({
 		data: Buffer,
 		contentType: String
 	},
-	pseudo: { 
+	nickname: { 
 		type: String,
+		unique: true,
 		trim: true
 	}
 },{ timestamps: { createdAt: "created_at" }});

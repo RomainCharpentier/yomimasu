@@ -15,6 +15,19 @@ module.exports = function (router) {
             }
         });
     });
+
+    /**
+     * POST Method : Return a book
+     */
+    router.post('/get', function(req, res) {
+        Book.findOne({_id: req.body._id}, (err, books) => {
+            if (err) {
+                res.status(500);
+            } else {
+                res.status(200).json(books);
+            }
+        });
+    });
     
     /**
      * POST Method : Create a book

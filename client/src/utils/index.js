@@ -18,7 +18,7 @@ export function pluck(obj, keys) {
 
 export function combineReducers(reducers = {}) {
     return (state = {}, action) => {
-        console.debug('Action Dispatch :: %s %O', action.type, action);
+        //console.debug('Action Dispatch :: %s %O', action.type, action);
 
         const nextState = {};
         let changed = false;
@@ -30,7 +30,7 @@ export function combineReducers(reducers = {}) {
             changed = changed || nextState !== state;
         }
 
-        console.log(nextState);
+        //console.log(nextState);
 
         return changed ? nextState : state;
     };

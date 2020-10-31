@@ -1,0 +1,41 @@
+@import '../common.scss';
+
+.usersContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.usersTable {
+    flex: 0.3;
+}
+
+#bootstrap-overrides .usersLine {
+    flex: 1;
+    vertical-align: middle;
+}
+
+/* #bootstrap-overrides .myImg {
+    height: 100px;
+    width: auto;
+} */
+
+.avatarOverlay {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.container:hover>.myImg {
+    opacity: 0.3;
+    cursor: pointer;
+}
+
+.container:hover>.avatarOverlay {
+    opacity: 1;
+    cursor: pointer;
+}

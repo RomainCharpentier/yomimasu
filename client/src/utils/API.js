@@ -19,12 +19,13 @@ export default {
     },
     
     isAuth : function() {
-        return true;
         //FIXME: Test
-        //return (localStorage.getItem('token') !== null);
+        return (localStorage.getItem('token') !== null);
     },
     
     isAdmin : async function() {
+        return true;
+        //FIXME: Test
         let user = await getUser(localStorage.getItem('token'));
         return user && user.role === 'admin';
     },
@@ -35,11 +36,16 @@ export default {
     },
 
     getUser : function(token) {
-        return axios.post(burl + '/user/getUser', {'token': token}, {headers: headers});
+        console.log(token);
+        return axios.post(burl + '/user/getUser', {token: token}, {headers: headers});
     },
 
-    getUsers : function(token) {
-        return axios.get(burl + '/user/getUsers', {}, {headers: headers});
+    findUserByNickname : function(nickname) {
+        return axios.get(burl + '/user/findUserByNickname', {nickname: nickname}, {headers: headers});
+    },
+
+    getUsers : function() {
+        return axios.get(burl + '/user/getUsers', {headers: headers});
     },
 
     updateUser : function(user) {
@@ -48,6 +54,10 @@ export default {
 
     getAllBooks : function() {
         return axios.post(burl + '/book/getAll', {headers: headers});
+    },
+
+    getBook : function(_id) {
+        return axios.post(burl + '/book/get', {_id: _id}, {headers: headers});
     },
 
     createBook : function(book) {

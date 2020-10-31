@@ -16,7 +16,7 @@ export default {
     dataURIToImageFile : (dataUri) => {
         if (!dataUri || dataUri === undefined) return null;
 
-        var split = dataUri.match(/^data:([^;]+)?(?:;base64)?,(.*)/);
+        var split = dataUri.match(/^data:([^;]+[;])*(?:base64)?,(.*)/);
         // type MIME
         var mimetype = split[1] || "";
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Image } from 'react-bootstrap';
+import { Image, Container, Col, Row } from 'react-bootstrap';
 import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
 import Pagination from '../components/Pagination'
-import './Users.css';
+import styles from "./Users.module.scss";
 
 export const Users = () => {
     const [users, setUsers] = useState([]);
@@ -12,37 +12,26 @@ export const Users = () => {
 
     // useEffect in only called once
     useEffect(() => {
-        /* API.getUsers().then((result) => {
-            setUsers(result.data);
+        API.getUsers().then((result) => {
+            setUsersDisp(result.data);
+            console.log(usersDisp);
         });
-        isAdmin = API.isAdmin(); */
-        setUsersDisp([
+        isAdmin = API.isAdmin();
+        /* setUsersDisp(usersDisp.fill(
             {
                 email: 'email',
                 pseudo: 'Pseudo',
                 role: 'user',
                 avatar: ''
-            },
-            {
-                email: 'email2',
-                pseudo: 'Pseudo2',
-                role: 'user',
-                avatar: ''
-            },
-            {
-                email: 'email3',
-                pseudo: 'Pseudo3',
-                role: 'user',
-                avatar: ''
             }
-        ]);
+        ), 0, 6); */
     }, []);
 
-    return (
+    /* return (
         <Pagination items={users} itemsPerPage={1} refreshPage={() => console.log('refresh')}>
-            <div className='users-container'>
+            <div className='usersContainer'>
                 <h1>Utilisateurs</h1>
-                <table className='table table-hover users-table'>
+                <table className='table table-hover usersTable'>
                     <thead>
                         <tr>
                             <th>#</th>
@@ -55,16 +44,37 @@ export const Users = () => {
                     <tbody> 
                         {usersDisp.map((user, index) => 
                             <tr key={index} style={{verticalAlign: 'middle'}}>
-                                <td className='users-line' style={{width:'5%'}}>{index}</td>
-                                <td className='users-line' style={{width:'10%'}}><Image src={ImageConverter.dataURIToImageFile(user.avatar)} fluid /></td>
-                                <td className='users-line'>{user.pseudo}</td>
-                                <td className='users-line'>{user.email}</td>
-                                {isAdmin && <td className='users-line'>{user.role}</td>}
+                                <td className='usersLine' style={{width:'5%'}}>{index}</td>
+                                <td className='usersLine' style={{width:'10%'}}><Image src={ImageConverter.dataURIToImageFile(user.avatar)} fluid /></td>
+                                <td className='usersLine'>{user.pseudo}</td>
+                                <td className='usersLine'>{user.email}</td>
+                                {isAdmin && <td className='usersLine'>{user.role}</td>}
                             </tr>
                         )}
                     </tbody>
                 </table>
             </div>
         </Pagination>
-    );
+    ); */
+
+    console.log(usersDisp)
+    return (
+        <Container>
+            <Row>
+                <h1>Utilisateurs</h1>
+            </Row>
+            <Row>
+                {usersDisp.map((user, index) =>
+                    <Col key={index} className={styles.container} md={2} onClick={() => window.location.href = `${window.location.href}/${user.email}`}>
+                        <Image className={'img-thumbnail', styles.myImg} src={ImageConverter.dataURIToImageFile(user.avatar)} roundedCircle fluid />
+                        <div className={styles.avatarOverlay}>
+                            <p>Click</p>
+                        </div>
+                        <p>{user.email}</p>
+                        <p>{user.nickname}</p>
+                    </Col>
+                )}
+            </Row>
+        </Container>
+    )
 }

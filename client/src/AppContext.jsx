@@ -6,7 +6,6 @@ const API_URL = 'https://api.ipify.org/?format=json';
 const AppContext = createContext();
 
 export { AppContext };
-console.log(reducer.toString());
 
 export function AppContextProvider(props) {
     let [state, dispatch] = useReducer(reducer, reducer({}, { type: 'INIT' }));

@@ -9,10 +9,12 @@ import { Signin } from './pages/Signin.jsx';
 import { Signup } from './pages/Signup.jsx';
 import { Profile } from './pages/Profile.jsx';
 import { Signout } from './pages/Signout.jsx';
-import BookListStore from './pages/BookList.jsx';
+import BookList from './pages/BookList.jsx';
 import { Write } from './pages/Write.jsx';
 import { Home } from './pages/Home.jsx';
 import { Users } from './pages/Users.jsx';
+import { User } from './pages/User.jsx';
+import Book from './pages/Book.jsx';
 import './App.css';
 
 class App extends Component {
@@ -28,9 +30,11 @@ class App extends Component {
                             <GuestRoute exact path="/signin" component={Signin}/>
                             <GuestRoute exact path ="/signup" component={Signup}/>
                             <PrivateRoute path='/profile' component={Profile} />
-                            <PrivateRoute path='/book_list' component={BookListStore} />
+                            <PrivateRoute exact path='/book_list' component={BookList} />
+                            <PrivateRoute path='/book_list/:id' component={Book} />
                             <PrivateRoute path='/write' component={Write} />
-                            <PrivateRoute path='/users' component={Users} />
+                            <PrivateRoute exact path='/users' component={Users} />
+                            <PrivateRoute path='/users/:id' component={User} />
                             <PrivateRoute path='/signout' component={Signout} />
                         </Switch>
                     </div>

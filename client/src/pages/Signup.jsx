@@ -9,6 +9,7 @@ export class Signup extends React.Component {
         super();
         this.state = {
             email : '',
+            nickname : '',
             password: '',
             cpassword: ''
         };
@@ -17,14 +18,13 @@ export class Signup extends React.Component {
     }
 
     handleSubmit = event => {
-        if(this.state.email.length === 0){
-            return;
-        }
-        if(this.state.password.length === 0 || this.state.password !== this.state.cpassword){
+        if(this.state.email.length === 0 || this.state.nickname.length === 0 
+            || this.state.password.length === 0 || this.state.password !== this.state.cpassword){
             return;
         }
         var _send = {
             email: this.state.email,
+            nickname: this.state.nickname,
             password: this.state.password,
             avatar: DefaultAvatar
         };
@@ -51,6 +51,11 @@ export class Signup extends React.Component {
                     <FormGroup controlId='email'>
                         <FormLabel>Email</FormLabel>
                         <FormControl autoFocus type='email' value={this.state.email} onChange={this.handleChange}/>
+                    </FormGroup>
+
+                    <FormGroup controlId='nickname'>
+                        <FormLabel>Pseudo</FormLabel>
+                        <FormControl type='text' value={this.state.nickname} onChange={this.handleChange}/>
                     </FormGroup>
 
                     <FormGroup controlId='password'>
