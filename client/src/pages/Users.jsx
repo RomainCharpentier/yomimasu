@@ -65,7 +65,7 @@ export const Users = () => {
             </Row>
             <Row>
                 {usersDisp.map((user, index) =>
-                    <Col key={index} className={styles.container} md={2} onClick={() => window.location.href = `${window.location.href}/${user.email}`}>
+                    <Col key={index} className={styles.container} md={2} onClick={() => window.location.href = `${window.location.href}/${user.nickname}`}>
                         <Image className={'img-thumbnail', styles.myImg} src={ImageConverter.dataURIToImageFile(user.avatar)} roundedCircle fluid />
                         <div className={styles.avatarOverlay}>
                             <p>Click</p>

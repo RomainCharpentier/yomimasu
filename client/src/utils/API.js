@@ -41,7 +41,7 @@ export default {
     },
 
     findUserByNickname : function(nickname) {
-        return axios.get(burl + '/user/findUserByNickname', {nickname: nickname}, {headers: headers});
+        return axios.post(burl + '/user/findUserByNickname', {nickname: nickname}, {headers: headers});
     },
 
     getUsers : function() {

@@ -144,12 +144,21 @@ module.exports = function (router) {
     /**
      * GET Method : Return an user based on nickname
      */
-    router.get('/findUserByNickname', function(req, res) {
-        var user = User.getUser(req.body.token);
-        if (user) {
-            res.status(200).json(user);
-        } else {
-            res.status(500);
-        }
+    router.post('/findUserByNickname', function(req, res) {
+        User.findOne({
+            nickname: req.body.nickname
+        }, (err, user) => {
+            if (err) {
+                res.status(500).json({
+                    text: "Erreur interne"
+                });
+            } else if(!user) {
+                res.status(401).json({
+                    text: "L'utilisateur n'existe pas"
+                });
+            } else {
+                res.status(200).json(user);
+            }
+        });
     });
 }
