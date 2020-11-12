@@ -2,7 +2,7 @@ import React from 'react';
 import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
 import { Button, FormGroup, FormControl, FormLabel, Image, Alert, Form } from 'react-bootstrap';
-import { ImageInput } from '../components/ImageInput.jsx';
+import ImageInput from '../components/ImageInput.jsx';
 import imageCompression from 'browser-image-compression'
 
 export class Profile extends React.Component {
@@ -40,30 +40,16 @@ export class Profile extends React.Component {
     handleFileChange = event => {
         delete this.state.server_message;
         this.setState(this.state);
-        var imageFile = event.target.files[0];
-        var options = {
-            maxSizeMB: 1,
-            maxWidthOrHeight: 300,
-            useWebWorker: true
-        };
-        imageCompression(imageFile, options)
-            .then((compressedFile) => {
+            
+        console.log(this.state.avatar)
 
-                var callback = (image, dataURI) => {
-                    this.setState({
-                        avatar: dataURI,
-                        avatar_width: image.naturalWidth,
-                        avatar_height: image.naturalHeight,
-                        avatar_image: ImageConverter.dataURIToImageFile(dataURI)
-                    });
-                    return ImageConverter.dataURIToImageFile(dataURI);
-                };
-                callback.bind(this);
-                return ImageConverter.fileToDataURL(compressedFile, callback);
-            })
-            .catch((error) => {
-                console.log(error.message);
-            });
+        this.setState({
+            avatar: event,
+            avatar_width: 300,
+            avatar_height: 300,
+            avatar_image: ImageConverter.dataURIToImageFile(event)
+        }, () => 
+        console.log(this.state.avatar));
     }
 
     handleChange = event => {
@@ -101,7 +87,6 @@ export class Profile extends React.Component {
                 default_avatar: this.state.avatar_image,
                 server_status: data.status
             });
-            console.log(data);
             /* event.target.value = null; */
         }, (error) => {
             console.log(error);
@@ -154,7 +139,6 @@ export class Profile extends React.Component {
     render() {
         // Message from server (error or not)
         const isAlert = this.state && this.state.server_status;
-        console.log(this.state && this.state.server_message);
         let alert = isAlert && this.createAlert(this.state.server_status, this.state.server_message);
         return (
             <div className='Form'>

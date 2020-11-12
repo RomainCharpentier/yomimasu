@@ -68,5 +68,34 @@ export default {
         mySuperImage.src = URL.createObjectURL(file);
         // quand elle sera chargé, on lui volera ses données
         mySuperImage.onload = drawOnCanvasHandler.bind(null, mySuperImage, afterLoadSuccessAction);
+    },
+
+    fileToDataURLWithScale : (file, crop, scaleX, scaleY, afterLoadSuccessAction) => {
+        var drawOnCanvasHandler = (mySuperImage, action) => {
+            var canvas = document.createElement("canvas");
+            canvas.width = mySuperImage.naturalWidth;
+            canvas.height = mySuperImage.naturalHeight;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(
+                mySuperImage.current,
+                crop.x * scaleX,
+                crop.y * scaleY,
+                crop.width * scaleX,
+                crop.height * scaleY,
+                0,
+                0,
+                crop.width,
+                crop.height
+            );
+            action(mySuperImage, canvas.toDataURL());
+        }
+        drawOnCanvasHandler.bind(this);
+
+        // création d'une balise <img/> créé à la volé (pas intégrée à la page car c'est inutile)
+        var mySuperImage = new Image();
+        // on lui donne en source l'url de l'image
+        mySuperImage.src = URL.createObjectURL(file);
+        // quand elle sera chargé, on lui volera ses données
+        mySuperImage.onload = drawOnCanvasHandler.bind(null, mySuperImage, afterLoadSuccessAction);
     }
 }

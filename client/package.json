@@ -14,13 +14,15 @@
     "react-dom": "^16.14.0",
     "react-dropzone": "^11.2.0",
     "react-file-reader": "^1.1.4",
+    "react-image-crop": "^8.6.6",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
-    "react-transition-group": "^4.4.1"
+    "react-transition-group": "^4.4.1",
+    "reactjs-popup": "^2.0.4"
   },
   "scripts": {
-    "start": "webpack serve --mode development --env development",
+    "start": "webpack serve --mode development --env development --hot",
     "build": "webpack --mode production"
   },
   "browserslist": {

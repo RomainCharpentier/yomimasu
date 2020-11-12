@@ -20,6 +20,7 @@ export default {
     
     isAuth : function() {
         //FIXME: Test
+        //return true;
         return (localStorage.getItem('token') !== null);
     },
     
@@ -36,7 +37,6 @@ export default {
     },
 
     getUser : function(token) {
-        console.log(token);
         return axios.post(burl + '/user/getUser', {token: token}, {headers: headers});
     },
 
