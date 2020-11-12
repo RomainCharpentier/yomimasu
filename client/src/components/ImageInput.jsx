@@ -13,7 +13,7 @@ const pixelRatio = window.devicePixelRatio || 1;
 const ImageInput = ({ action, width, height }) => {
     const [upImg, setUpImg] = useState(null);
     const imgRef = useRef(null);
-    const [crop, setCrop] = useState({ unit: "%", width: 100, aspect: 1 / 1 });
+    const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 1 / 1 });
     const [completedCrop, setCompletedCrop] = useState(null);
     const [openPopup, setOpenPopup] = useState(false);
     const [fileUrl, setFileUrl] = useState('');
@@ -70,6 +70,7 @@ const ImageInput = ({ action, width, height }) => {
             <input type="file" accept="image/*" onChange={onSelectFile} />
             <Popup modal open={openPopup} onClose={() => setOpenPopup(false)}>
                 <ReactCrop
+                    circularCrop 
                     src={upImg}
                     onImageLoaded={onLoad}
                     crop={crop}

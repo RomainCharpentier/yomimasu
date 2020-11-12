@@ -103,7 +103,7 @@ export class Profile extends React.Component {
     displayForm() {
         return (
             <div>
-                <Image src={this.state.avatar_image} />
+                <Image src={this.state.avatar_image} className='rounded-circle' />
                 <ImageInput action={this.handleFileChange} />
 
                 <FormGroup controlId='email'>
