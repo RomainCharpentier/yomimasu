@@ -5,7 +5,6 @@ import ReactCrop from 'react-image-crop';
 import "react-image-crop/dist/ReactCrop.css";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import ImageConverter from '../utils/ImageConverter';
 
 // Increase pixel density for crop preview quality on retina screens.
 const pixelRatio = window.devicePixelRatio || 1;
@@ -13,7 +12,7 @@ const pixelRatio = window.devicePixelRatio || 1;
 const ImageInput = ({ action, width, height }) => {
     const [upImg, setUpImg] = useState(null);
     const imgRef = useRef(null);
-    const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 1 / 1 });
+    const [crop, setCrop] = useState({ unit: '%', width: 30, aspect: 1/1 });
     const [completedCrop, setCompletedCrop] = useState(null);
     const [openPopup, setOpenPopup] = useState(false);
     const [fileUrl, setFileUrl] = useState('');
@@ -21,7 +20,7 @@ const ImageInput = ({ action, width, height }) => {
     const onSelectFile = useCallback((e) => {
         if (e.target.files && e.target.files.length > 0) {
             const reader = new FileReader();
-            reader.addEventListener("load", () => setUpImg(reader.result));
+            reader.addEventListener('load', () => setUpImg(reader.result));
             reader.readAsDataURL(e.target.files[0]);
             setOpenPopup(true);
         }
@@ -56,26 +55,27 @@ const ImageInput = ({ action, width, height }) => {
         );
         ctx.fill();
 
-        console.log(`scaleX = ${scaleX}`)
-        console.log(`scaleY = ${scaleY}`)
-        console.log(`crop.width = ${crop.width}`)
-        console.log(`crop.height = ${crop.height}`)
-
-        const dataUrl = canvas.toDataURL();
-        setFileUrl(dataUrl);
+        setFileUrl(canvas.toDataURL('image/jpeg', 0.6));
     }, [completedCrop]);
 
     return (
         <div>
-            <input type="file" accept="image/*" onChange={onSelectFile} />
-            <Popup modal open={openPopup} onClose={() => setOpenPopup(false)}>
+            <input type='file' accept='image/*' onChange={onSelectFile} />
+            <Popup
+                modal 
+                open={openPopup}
+                onClose={() => {
+                    setOpenPopup(false);
+                    action(fileUrl);
+                }}
+            >
                 <ReactCrop
                     circularCrop 
                     src={upImg}
                     onImageLoaded={onLoad}
                     crop={crop}
-                    onChange={(c) => setCrop(c)}
-                    onComplete={(c) => { /* makeClientCrop(c); */ setCompletedCrop(c); }}
+                    onChange={setCrop}
+                    onComplete={setCompletedCrop}
                 />
                 <Button
                     disabled={!completedCrop?.width || !completedCrop?.height}

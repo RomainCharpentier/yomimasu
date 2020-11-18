@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const prompt = require('prompt');
 
 const fs = require('fs'),
-configPath = './config.json';
+    configPath = './config.json';
 
 // Connecting to the database
 mongoose.set('useCreateIndex', true);
@@ -21,16 +21,18 @@ try {
     // Using prompt
     prompt.start();
     prompt.get(['username', 'password'], function (err, result) {
-        if (err) { 
-            console.log(err); 
-            return 1; 
+        if (err) {
+            console.log(err);
+            return 1;
         }
         runServer(result.username, result.password);
     });
 }
 
 function runServer(username, password) {
-    mongoose.connect('mongodb+srv://'+ username + ':' + password + '@cluster0.xjnrs.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }).then(() => {
+    mongoose.connect('mongodb+srv://' + username + ':' + password + '@cluster0.xjnrs.gcp.mongodb.net/test?retryWrites=true&w=majority', {
+        useNewUrlParser: true
+    }).then(() => {
         console.log('Connected to mongoDB')
     }).catch(e => {
         console.log('Error while DB connecting');
@@ -42,11 +44,11 @@ function runServer(username, password) {
 
     //Defining the Middleware
     var urlencodedParser = bodyParser.urlencoded({
+        limit: '50mb',
         extended: true
     });
     app.use(urlencodedParser);
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({extended: true}));
 
     //Defining the CORS
     app.use(function (req, res, next) {
@@ -61,7 +63,7 @@ function runServer(username, password) {
     var router = express.Router();
     app.use('/user', router);
     require(__dirname + '/controllers/userController')(router);
-    
+
     app.use('/book', router);
     require(__dirname + '/controllers/bookController')(router);
 

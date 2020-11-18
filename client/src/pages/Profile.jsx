@@ -40,16 +40,13 @@ export class Profile extends React.Component {
     handleFileChange = event => {
         delete this.state.server_message;
         this.setState(this.state);
-            
-        console.log(this.state.avatar)
 
         this.setState({
             avatar: event,
             avatar_width: 300,
             avatar_height: 300,
             avatar_image: ImageConverter.dataURIToImageFile(event)
-        }, () => 
-        console.log(this.state.avatar));
+        });
     }
 
     handleChange = event => {
@@ -87,7 +84,6 @@ export class Profile extends React.Component {
                 default_avatar: this.state.avatar_image,
                 server_status: data.status
             });
-            /* event.target.value = null; */
         }, (error) => {
             console.log(error);
             this.setState({
@@ -95,7 +91,6 @@ export class Profile extends React.Component {
                 server_status: error.status,
                 server_message: error
             });
-            /* event.target.value = null; */
             return;
         });
     }
@@ -144,7 +139,7 @@ export class Profile extends React.Component {
             <div className='Form'>
                 {isAlert && alert}
                 <h1>Profil</h1>
-                { this.state && this.displayForm()}
+                { this.state && this.displayForm() }
             </div>
         );
     }
