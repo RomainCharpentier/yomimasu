@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import API from '../utils/API';
 import PropTypes from 'prop-types';
+import styles from '../common.scss';
 
 export class Signin extends React.Component {
 
@@ -39,7 +40,7 @@ export class Signin extends React.Component {
     
     render() {
         return (
-            <div className='Form'>
+            <div className={styles.Form}>
                 <h1>Connexion</h1>
                 <div>
                     <FormGroup controlId='email'>

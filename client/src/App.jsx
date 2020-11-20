@@ -15,16 +15,16 @@ import { Home } from './pages/Home.jsx';
 import { Users } from './pages/Users.jsx';
 import { User } from './pages/User.jsx';
 import Book from './pages/Book.jsx';
-import './App.css';
+import styles from './App.module.scss';
 
 class App extends Component {
   
   render() {
         return (
             <APIErrorProvider>
-                <div className="App">
+                <div className={styles.App}>
                     <Topbar />
-                    <div className="App-content">
+                    <div className={styles.App-content}>
                         <Switch>
                             <Route exact path="/" component={Home}/>
                             <GuestRoute exact path="/signin" component={Signin}/>

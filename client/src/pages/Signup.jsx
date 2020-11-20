@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import API from '../utils/API';
 import DefaultAvatar from '../images/default_avatar.png';
+import styles from '../common.scss';
 
 export class Signup extends React.Component {
 
@@ -45,7 +46,7 @@ export class Signup extends React.Component {
     
     render() {
         return (
-            <div className='Form'>
+            <div className={styles.Form}>
                 <h1>Inscription</h1>
                 <div>
                     <FormGroup controlId='email'>

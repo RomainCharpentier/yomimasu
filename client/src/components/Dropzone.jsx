@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import {useDropzone} from 'react-dropzone';
+import styles from '../common.scss';
 
 function Dropzone() {
 
@@ -13,7 +14,7 @@ function Dropzone() {
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
   
     return (
-      <div {...getRootProps()} className='dropzone'>
+      <div {...getRootProps()} className={styles.dropzone}>
         <input {...getInputProps()} />
         {
           isDragActive ?

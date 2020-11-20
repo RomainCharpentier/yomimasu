@@ -3,7 +3,7 @@ import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
 import { Button, FormGroup, FormControl, FormLabel, Image, Alert, Form } from 'react-bootstrap';
 import ImageInput from '../components/ImageInput.jsx';
-import imageCompression from 'browser-image-compression'
+import styles from '../common.scss';
 
 export class Profile extends React.Component {
 
@@ -136,7 +136,7 @@ export class Profile extends React.Component {
         const isAlert = this.state && this.state.server_status;
         let alert = isAlert && this.createAlert(this.state.server_status, this.state.server_message);
         return (
-            <div className='Form'>
+            <div className={styles.Form}>
                 {isAlert && alert}
                 <h1>Profil</h1>
                 { this.state && this.displayForm() }

@@ -71,3 +71,36 @@ function runServer(username, password) {
     const port = process.env.PORT || 8000;
     app.listen(port, () => console.log(`Listening on port ${port}`));
 }
+
+//https://medium.com/ecmastack/uploading-files-with-react-js-and-node-js-e7e6b707f4ef
+function configureImageMiddleware(app) {
+    cloudinary.config({
+        cloud_name: 'xxx',
+        api_key: 'xxxx',
+        api_secret: 'xxxxx',
+    });
+
+    const storage = multer.memoryStorage();
+    const upload = multer({
+        storage
+    });
+    app.post('/files', upload.single('file'), fileUploadMiddleware);
+}
+
+function fileUploadMiddleware(req, res) {
+    cloudinary.uploader.upload_stream((result) => {
+        axios({
+            url: '/api/upload', //API endpoint that needs file URL from CDN
+            method: 'post',
+            data: {
+                url: result.secure_url,
+                name: req.body.name,
+                description: req.body.description,
+            },
+        }).then((response) => {
+            res.status(200).json(response.data.data);
+        }).catch((error) => {
+            res.status(500).json(error.response.data);
+        });
+    }).end(req.file.buffer);
+}

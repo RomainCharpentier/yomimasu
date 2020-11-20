@@ -3,6 +3,7 @@ import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import useAPIError from '../hooks/useAPIError';
 import DropZone from '../components/Dropzone';
 import API from '../utils/API';
+import styles from '../common.scss';
 
 const writeMode = {
     FILE: 'file',
@@ -83,7 +84,7 @@ export const Write = () => {
     }
     
     return (
-        <div className='Form'>
+        <div className={styles.Form}>
             <h1>Write</h1>
             {Object.entries(writeMode).map(([key, value]) => <Button key={key} onClick={e => setMode(value)} disabled={mode===value}>{value}</Button>)}
             {renderSwitch()}
