@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Image, Container, Col, Row } from 'react-bootstrap';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Image, Container, Col, Row, Button } from 'react-bootstrap';
 import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
 import Pagination from '../components/Pagination'
@@ -12,9 +12,7 @@ export const Users = () => {
 
     // useEffect in only called once
     useEffect(() => {
-        API.getUsers().then((result) => {
-            setUsersDisp(result.data);
-        });
+        loadUsers();
         isAdmin = API.isAdmin();
         /* setUsersDisp(usersDisp.fill(
             {
@@ -24,6 +22,23 @@ export const Users = () => {
                 avatar: ''
             }
         ), 0, 6); */
+    }, []);
+
+    const loadUsers = useCallback(() => {
+        API.getUsers().then((result) => {
+            setUsersDisp(result.data);
+        });
+    }, []);
+
+    const deleteUser = useCallback((email) => {
+        API.deleteUser(email).then(() => {
+            loadUsers();
+            console.log('ok');
+        }, (error) => {
+            console.log(error);
+        }).catch((error) => {
+            console.log(error);
+        });
     }, []);
 
     /* return (
@@ -63,14 +78,16 @@ export const Users = () => {
             </Row>
             <Row>
                 {usersDisp.map((user, index) =>
-                    <Col key={index} className={styles.container} md={2} onClick={() => window.location.href = `${window.location.href}/${user.nickname}`}>
-                        <Image className={'img-thumbnail', styles.myImg} src={ImageConverter.dataURIToImageFile(user.avatar)} roundedCircle fluid />
+                    <Col key={index} className={styles.container} md={2}>
+                        <div onClick={() => window.location.href = `${window.location.href}/${user.nickname}`}>
+                            <Image className={'img-thumbnail', styles.myImg} src={ImageConverter.dataURIToImageFile(user.avatar)} roundedCircle fluid />
+                        </div>
                         <div className={styles.avatarOverlay}>
                             <p>Voir le profil</p>
                         </div>
                         <p>{user.email}</p>
                         <p>{user.nickname}</p>
-                        <btn onClick={() => API.deleteUser(user.email)}>Delete</btn>
+                    <Button onClick={() => deleteUser(user.email)}>Delete</Button>
                     </Col>
                 )}
             </Row>

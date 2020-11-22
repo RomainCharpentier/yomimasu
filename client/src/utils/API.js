@@ -53,7 +53,7 @@ export default {
     },
 
     deleteUser : function(email) {
-        return axios.delete(burl + '/user/deleteUser', {email: email}, {headers: headers});
+        return axios.delete(`${burl}/user/deleteUser/${email}`, {headers: headers});
     },
 
     getAllBooks : function() {

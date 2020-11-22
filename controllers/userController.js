@@ -165,10 +165,10 @@ module.exports = function (router) {
     /**
      * DELETE Method : Delete an user
      */
-    router.delete('/deleteUser', function(req, res) {
+    router.delete('/deleteUser/:id', function(req, res) {
         console.log('enter')
         User.deleteOne({
-            email: req.body.email
+            email: req.params.id
         }).then(() => {
             console.log('ok')
             res.status(200);
