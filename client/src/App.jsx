@@ -24,7 +24,7 @@ class App extends Component {
             <APIErrorProvider>
                 <div className={styles.App}>
                     <Topbar />
-                    <div className={styles.App-content}>
+                    <div className={styles.AppContent}>
                         <Switch>
                             <Route exact path="/" component={Home}/>
                             <GuestRoute exact path="/signin" component={Signin}/>

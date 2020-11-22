@@ -27,8 +27,8 @@ export default {
     isAdmin : async function() {
         return true;
         //FIXME: Test
-        let user = await getUser(localStorage.getItem('token'));
-        return user && user.role === 'admin';
+        //let user = await getUser(localStorage.getItem('token'));
+        //return user && user.role === 'admin';
     },
     
     signout : function() {
@@ -50,6 +50,10 @@ export default {
 
     updateUser : function(user) {
         return axios.post(burl + '/user/updateUser', user, {headers: headers});
+    },
+
+    deleteUser : function(email) {
+        return axios.delete(burl + '/user/deleteUser', {email: email}, {headers: headers});
     },
 
     getAllBooks : function() {

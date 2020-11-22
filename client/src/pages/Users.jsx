@@ -56,7 +56,6 @@ export const Users = () => {
         </Pagination>
     ); */
 
-    console.log(usersDisp)
     return (
         <Container>
             <Row>
@@ -71,6 +70,7 @@ export const Users = () => {
                         </div>
                         <p>{user.email}</p>
                         <p>{user.nickname}</p>
+                        <btn onClick={() => API.deleteUser(user.email)}>Delete</btn>
                     </Col>
                 )}
             </Row>
