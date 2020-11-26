@@ -166,14 +166,11 @@ module.exports = function (router) {
      * DELETE Method : Delete an user
      */
     router.delete('/deleteUser/:id', function(req, res) {
-        console.log('enter')
         User.deleteOne({
             email: req.params.id
         }).then(() => {
-            console.log('ok')
             res.status(200);
         }).catch((error) => {
-            console.log('not ok')
             res.status(500).send(error);
         });
     });
