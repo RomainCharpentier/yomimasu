@@ -64,7 +64,7 @@ const TopBar = () => {
 
     return (
         <Navbar className="bg-dark navbar-dark navbar-expand-sm">
-            <Navbar.Brand href="/">Navbar</Navbar.Brand>
+            <Navbar.Brand href="/">Yomimasu</Navbar.Brand>
             {links}
             <Form inline>
                 <FormControl ref={searchRef} type="text" placeholder="Search" className="mr-sm-2" onChange={handleChange} onKeyPress={handleKeyPress} />

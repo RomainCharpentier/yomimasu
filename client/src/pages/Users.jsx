@@ -49,7 +49,16 @@ export const Users = () => {
     return (
         <div>
             <h1>Utilisateurs</h1>
-            <Pagination items={users} itemsPerPage={1} refreshPage={(page) => setPage(page)} template={userTemplate} />
+            {/* <Pagination items={users} itemsPerPage={3} refreshPage={(page) => setPage(page)} template={userTemplate} /> */}
+            <div className={styles.displayUser}>
+                {users.map(((user, index) => (
+                    // <div key={index}>{Object.entries(user)}</div>
+                    // <div key={index*2} >{(userTemplate(user))} </div>
+                    <Col key={index} className={styles.container} md={3} xs={12}>
+                        {userTemplate(user)}
+                    </Col>
+                )))}
+            </div>
         </div>
     );
 }

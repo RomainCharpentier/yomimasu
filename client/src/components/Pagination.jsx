@@ -44,7 +44,7 @@ const Pagination = (props) => {
             <Row>
                 {items.map((item, index) =>
                     (Math.trunc(index / itemsPerPage) == page) && (
-                        <Col key={index} className={styles.container} md={2}>
+                        <Col key={index} className={styles.container} md={4} xs={12}>
                             {template(item)}
                         </Col>
                     )
