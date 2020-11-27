@@ -1,25 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { Image, Container, Col, Row } from 'react-bootstrap';
+import React, { useState, useEffect, useContext } from 'react';
+import { Image } from 'react-bootstrap';
 import API from '../utils/API';
-import ImageConverter from '../utils/ImageConverter';
-import Pagination from '../components/Pagination'
-import styles from "./Users.module.scss";
+import LoadingContext from '../components/LoadingContext.jsx';
 
 export const User = props => {
-    const [user, setUser] = useState({avatar: '', nickname: ''});
+    const {loading, setLoading} = useContext(LoadingContext);
+    const [user, setUser] = useState(null);
 
-    // useEffect in only called once
     useEffect(() => {
-        API.findUserByNickname(props.match.params.id).then(result => setUser(result.data)).catch(err => console.log(err));
-        
+        API.findUserByNickname(props.match.params.id)
+            .then(result => setUser(result.data))
+            .catch(err => console.log(err));
     }, []);
 
-    return (
-        <div>
-            <Image src={user.avatar} />
-            <p>{user.nickname}</p>
-            <p>Rôle : {user.role}</p>
-            <p>Inscription : {new Date(user.created_at).toLocaleDateString('fr-FR')}</p>
-        </div>
-    )
+    if (user) {
+        return (
+            <LoadingContext.Consumer>
+                {({ loading, setLoading }) => (
+                    <div>
+                        <Image src={user.avatar} />
+                        <p>{user.nickname}</p>
+                        <p>Rôle : {user.role}</p>
+                        <p>Inscription : {new Date(user.created_at).toLocaleDateString('fr-FR')}</p>
+                        <button onClick={() => setLoading(true)}>test</button>
+                    </div>
+                )}
+            </LoadingContext.Consumer>
+        );
+    } else {
+        return (
+            <p>Utilisateur inconnu</p>
+        );
+    }
 }

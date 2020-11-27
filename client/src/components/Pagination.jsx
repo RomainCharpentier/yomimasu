@@ -35,6 +35,7 @@ const Pagination = (props) => {
         for (let i=Math.max(page-2, 0); i<=Math.min(page+2, maxPage); i++) {
             array.push(i);
         }
+        
         return array;
     }
 

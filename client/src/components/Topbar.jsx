@@ -1,32 +1,36 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
+import { useHistory } from 'react-router-dom';
 import API from '../utils/API';
 
-export class Topbar extends React.Component {
+const TopBar = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isAuth : API.isAuth(),
-            searchText: ''
-        };
-        this.searchRef = React.createRef();
-        this.handleChange.bind(this);
-        this.handleClick.bind(this);
+    const [isAuth, setIsAuth] = useState(API.isAuth());
+    const [searchText, setSearchText] = useState('');
+    const searchRef = useRef(null);
+    const history = useHistory();
+
+    const handleChange = event => {
+        setSearchText(event.target.value);
     }
 
-    handleChange = event => {
-        this.setState({searchText: event.target.value});
-    }
-
-    handleClick = () => {
-        console.log(this.state.searchText);
+    const handleClick = () => {
+        history.push(`/users/${searchText}`);
         // Clear the search value (state and input)
-        this.setState({searchText: ''});
-        this.searchRef.current.value = '';
+        setSearchText('');
+        searchRef.current.value = '';
     }
 
-    getPublicBar = () => {
+    const handleKeyPress = event => {
+        if (event.charCode === 13) {
+            history.push(`/users/${searchText}`);
+            // Clear the search value (state and input)
+            setSearchText('');
+            searchRef.current.value = '';
+        }
+    }
+
+    const getPublicBar = () => {
         return (
             <Nav className="mr-auto">
                 <Nav.Link href="/">Accueil</Nav.Link>
@@ -36,7 +40,7 @@ export class Topbar extends React.Component {
         );
     }
 
-    getPrivateBar = () => {
+    const getPrivateBar = () => {
         return (
             <Nav className="mr-auto">
                 <Nav.Link href="/">Accueil</Nav.Link>
@@ -49,26 +53,25 @@ export class Topbar extends React.Component {
         );
     }
 
-    render() {
-        const isAuth = this.state.isAuth;
-        var links;
-        if (isAuth) {
-            links = this.getPrivateBar();
+    var links;
+    if (isAuth) {
+        links = getPrivateBar();
 
-        } else {
-            links = this.getPublicBar();
-            
-        }
-
-        return (
-            <Navbar className="bg-dark navbar-dark navbar-expand-sm">
-                <Navbar.Brand href="/">Navbar</Navbar.Brand>
-                {links}
-                <Form inline>
-                    <FormControl ref={this.searchRef} type="text" placeholder="Search" className="mr-sm-2" onChange={this.handleChange} />
-                    <Button variant="outline-info" onClick={this.handleClick}>Search</Button>
-                </Form>
-            </Navbar>
-        );
+    } else {
+        links = getPublicBar();
+        
     }
+
+    return (
+        <Navbar className="bg-dark navbar-dark navbar-expand-sm">
+            <Navbar.Brand href="/">Navbar</Navbar.Brand>
+            {links}
+            <Form inline>
+                <FormControl ref={searchRef} type="text" placeholder="Search" className="mr-sm-2" onChange={handleChange} onKeyPress={handleKeyPress} />
+                <Button variant="outline-info" onClick={handleClick}>Search</Button>
+            </Form>
+        </Navbar>
+    );
 }
+
+export default TopBar;
