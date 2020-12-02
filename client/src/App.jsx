@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import APIErrorProvider from './providers/APIErrorProvider.jsx';
 import { GuestRoute } from './routes/GuestRoute.jsx';
@@ -21,27 +21,28 @@ import { Image } from 'react-bootstrap';
 import LoadingContext from './components/LoadingContext.jsx';
 
 const App = () => {
-    const state = useContext(LoadingContext);
+    const [loading, setLoading] = useState(false);
 
-    let content;
-    if (state.loading) {
-        content = <Image src={loadingCircle} />;
+    const getContent = loading => {
+        if (loading) {
+            return <Image src={loadingCircle} />;
 
-    } else {
-        content = (
-            <Switch>
-                <Route exact path="/" component={Home}/>
-                <GuestRoute exact path="/signin" component={Signin}/>
-                <GuestRoute exact path ="/signup" component={Signup}/>
-                <PrivateRoute path='/profile' component={Profile} />
-                <PrivateRoute exact path='/book_list' component={BookList} />
-                <PrivateRoute path='/book_list/:id' component={Book} />
-                <PrivateRoute path='/write' component={Write} />
-                <PrivateRoute exact path='/users' component={Users} />
-                <PrivateRoute path='/users/:id' component={User} />
-                <PrivateRoute path='/signout' component={Signout} />
-            </Switch>
-        );
+        } else {
+            return (
+                <Switch>
+                    <Route exact path="/" component={Home}/>
+                    <GuestRoute exact path="/signin" component={Signin}/>
+                    <GuestRoute exact path ="/signup" component={Signup}/>
+                    <PrivateRoute path='/profile' component={Profile} />
+                    <PrivateRoute exact path='/book_list' component={BookList} />
+                    <PrivateRoute path='/book_list/:id' component={Book} />
+                    <PrivateRoute path='/write' component={Write} />
+                    <PrivateRoute exact path='/users' component={Users} />
+                    <PrivateRoute path='/users/:id' component={User} />
+                    <PrivateRoute path='/signout' component={Signout} />
+                </Switch>
+            );
+        }
     }
   
     return (
@@ -49,8 +50,8 @@ const App = () => {
             <div className={styles.App}>
                 <Topbar />
                 <div className={styles.AppContent}>
-                    <LoadingContext.Provider value={state}>
-                        {content}
+                    <LoadingContext.Provider value={{loading, setLoading}}>
+                        {getContent(loading)}
                     </LoadingContext.Provider>
                 </div>
             </div>
