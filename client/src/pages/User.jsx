@@ -1,59 +1,32 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import { Image } from 'react-bootstrap';
 import API from '../utils/API';
-import LoadingContext from '../components/LoadingContext.jsx';
+import FetchData from '../components/FetchData.jsx';
 
-export const User = props => {
-    const {loading, setLoading} = useContext(LoadingContext);
+const User = props => {
     const [user, setUser] = useState(null);
-    
-    useEffect(() => {
-        let unmounted = false;
-        
-        API.findUserByNickname(props.match.params.id)
-            .then(result => {
-                if (!unmounted) {
-                    setUser(result.data);
+
+    return (
+        <FetchData action={() => API.findUserByNickname(props.match.params.id)}>
+            {data => {
+                const user = data.data;
+                if (user) {
+                    return (
+                        <div>
+                            <Image src={user.avatar} />
+                            <p>{user.nickname}</p>
+                            <p>Rôle : {user.role}</p>
+                            <p>Inscription : {new Date(user.created_at).toLocaleDateString('fr-FR')}</p>
+                        </div>
+                    );
+                } else {
+                    return (
+                        <p>Utilisateur inconnu</p>
+                    );
                 }
-            })
-            .catch(err => console.log(err));
-
-        return () => {
-            unmounted = true;
-        };
-    }, []);
-
-    useEffect(() => {
-        let unmounted = false;
-        
-        API.findUserByNickname(props.match.params.id)
-            .then(result => {
-                setLoading(true);
-                if (!unmounted) {
-                    setUser(result.data);
-                }
-                setLoading(false);
-            })
-            .catch(err => console.log(err));
-
-        return () => {
-            unmounted = true;
-        };
-    }, []);
-
-    if (user) {
-        return (
-            <div>
-                <Image src={user.avatar} />
-                <p>{user.nickname}</p>
-                <p>Rôle : {user.role}</p>
-                <p>Inscription : {new Date(user.created_at).toLocaleDateString('fr-FR')}</p>
-                <button onClick={() => setLoading(true)}>test</button>
-            </div>
-        );
-    } else {
-        return (
-            <p>Utilisateur inconnu</p>
-        );
-    }
+            }}
+        </FetchData>
+    );
 }
+
+export default User;

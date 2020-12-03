@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Image, Container, Col, Row, Button } from 'react-bootstrap';
 import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
-import Pagination from '../components/Pagination'
+import Pagination from '../components/Pagination';
 import styles from "./Users.module.scss";
 
 export const Users = () => {
