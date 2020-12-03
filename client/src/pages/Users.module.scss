@@ -35,6 +35,10 @@
     text-align: center;
 }
 
+.container {
+    margin: 1em 0em;
+}
+
 .container:hover>.myImg {
     opacity: 0.3;
     cursor: pointer;
@@ -43,4 +47,9 @@
 .container:hover>.avatarOverlay {
     opacity: 1;
     cursor: pointer;
+}
+
+.displayUser {
+    display: flex;
+    flex-wrap: wrap;
 }
