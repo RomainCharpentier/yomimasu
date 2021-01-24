@@ -1,0 +1,9 @@
+@import '../common.scss';
+
+.col {
+    max-width: 300px;
+}
+
+img {
+    max-width: -moz-available;
+}

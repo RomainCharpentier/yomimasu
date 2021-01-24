@@ -4,22 +4,15 @@ import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
 import Pagination from '../components/Pagination';
 import styles from "./Users.module.scss";
+import FetchData from '../components/FetchData.jsx';
 
 export const Users = () => {
-    const [users, setUsers] = useState([]);
     const [page, setPage] = useState(0);
-    let isAdmin = true;
+    let isAdmin = false;
 
     // useEffect in only called once
     useEffect(() => {
-        loadUsers();
-        isAdmin = API.isAdmin();
-    }, []);
-
-    const loadUsers = useCallback(() => {
-        API.getUsers().then((result) => {
-            setUsers(result.data);
-        });
+        isAdmin = false;
     }, []);
 
     const deleteUser = useCallback((email) => {
@@ -34,15 +27,14 @@ export const Users = () => {
 
     const userTemplate = (user) => (
         <>
-            <div onClick={() => window.location.href = `${window.location.href}/${user.nickname}`}>
-                <Image className={'img-thumbnail', styles.myImg} src={ImageConverter.dataURIToImageFile(user.avatar)} roundedCircle fluid />
+            <div className={styles.avatar} onClick={() => window.location.href = `${window.location.href}/${user.nickname}`}>
+                <Image className={'img-thumbnail', styles.avatarImage} src={ImageConverter.dataURIToImageFile(user.avatar)} roundedCircle fluid />
+                <div className={styles.avatarOverlay}>
+                    <p>Voir le profil</p>
+                </div>
             </div>
-            <div className={styles.avatarOverlay}>
-                <p>Voir le profil</p>
-            </div>
-            <p>{user.email}</p>
-            <p>{user.nickname ? user.nickname : 'Pas de pseudo'}</p>
-            <Button onClick={() => deleteUser(user.email)}>Delete</Button>
+            <p>{user.nickname}</p>
+            {isAdmin && <Button onClick={() => deleteUser(user.email)}>Delete</Button>}
         </>
     );
 
@@ -50,15 +42,23 @@ export const Users = () => {
         <div>
             <h1>Utilisateurs</h1>
             {/* <Pagination items={users} itemsPerPage={3} refreshPage={(page) => setPage(page)} template={userTemplate} /> */}
-            <div className={styles.displayUser}>
-                {users.map(((user, index) => (
-                    // <div key={index}>{Object.entries(user)}</div>
-                    // <div key={index*2} >{(userTemplate(user))} </div>
-                    <Col key={index} className={styles.container} md={3} xs={12}>
-                        {userTemplate(user)}
-                    </Col>
-                )))}
-            </div>
+
+            <FetchData action={() => API.getUsers()}>
+                {data => {
+                    const users = data.data;
+                    return (
+                        <div className={styles.displayUser}>
+                            {users.map(((user, index) => (
+                                // <div key={index}>{Object.entries(user)}</div>
+                                // <div key={index*2} >{(userTemplate(user))} </div>
+                                <Col key={index} className={styles.container} md={2} sm={4} xs={6}>
+                                    {userTemplate(user)}
+                                </Col>
+                            )))}
+                        </div>
+                    );
+                }}
+            </FetchData>
         </div>
     );
 }

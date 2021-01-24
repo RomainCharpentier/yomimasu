@@ -14,14 +14,10 @@
     vertical-align: middle;
 }
 
-/* #bootstrap-overrides .myImg {
-    height: 100px;
+.avatarImage {
     width: auto;
-} */
-
-.myImg {
-    width: auto;
-    height: 10em;
+    height: auto;
+    max-height: 10em;
 }
 
 .avatarOverlay {
@@ -35,18 +31,17 @@
     text-align: center;
 }
 
-.container {
+.avatar {
     margin: 1em 0em;
+    cursor: pointer;
 }
 
-.container:hover>.myImg {
+.avatar:hover>.avatarImage {
     opacity: 0.3;
-    cursor: pointer;
 }
 
-.container:hover>.avatarOverlay {
+.avatar:hover>.avatarOverlay {
     opacity: 1;
-    cursor: pointer;
 }
 
 .displayUser {

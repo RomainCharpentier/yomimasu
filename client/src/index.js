@@ -5,6 +5,14 @@ import App from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import { AppContextProvider } from './AppContext';
+import axios, { axiosResponse } from 'axios';
+
+// Axios Interceptor
+axios.interceptors.response.use(async value => {
+    await new Promise(res => setTimeout(res, 1000));
+    return value;
+});
+
 
 ReactDOM.render(
     <AppContextProvider>
