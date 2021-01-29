@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import API from '../utils/API';
 import PropTypes from 'prop-types';
@@ -6,8 +6,8 @@ import styles from '../common.scss';
 
 export class Signin extends React.Component {
 
-    constructor(props) {
-        super();
+    constructor(props: any) {
+        super(props);
         this.state = {
             email : '',
             password: ''
@@ -16,7 +16,7 @@ export class Signin extends React.Component {
         this.handleSubmit.bind(this);
     }
 
-    handleSubmit = event => {
+    handleSubmit = () => {
         if(this.state.email.length === 0){
             return;
         }
@@ -32,7 +32,7 @@ export class Signin extends React.Component {
         })
     }
 
-    handleChange = event => {
+    handleChange = (event: ChangeEvent) => {
         this.setState({
             [event.target.id]: event.target.value
         });

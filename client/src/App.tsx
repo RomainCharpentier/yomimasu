@@ -1,20 +1,20 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import APIErrorProvider from './providers/APIErrorProvider.jsx';
-import { GuestRoute } from './routes/GuestRoute.jsx';
-import { PrivateRoute } from './routes/PrivateRoute.jsx';
-import Topbar from './components/Topbar.jsx';
-import { APIErrorNotification } from './components/APIErrorNotification.jsx';
-import { Signin } from './pages/Signin.jsx';
-import { Signup } from './pages/Signup.jsx';
-import { Profile } from './pages/Profile.jsx';
-import { Signout } from './pages/Signout.jsx';
-import BookList from './pages/BookList.jsx';
-import { Write } from './pages/Write.jsx';
-import { Home } from './pages/Home.jsx';
-import { Users } from './pages/Users.jsx';
-import User from './pages/User.jsx';
-import Book from './pages/Book.jsx';
+import APIErrorProvider from './providers/APIErrorProvider';
+import { GuestRoute } from './routes/GuestRoute';
+import { PrivateRoute } from './routes/PrivateRoute';
+import Topbar from './components/Topbar';
+import { APIErrorNotification } from './components/APIErrorNotification';
+import { Signin } from './pages/Signin';
+import { Signup } from './pages/Signup';
+import { Profile } from './pages/Profile';
+import { Signout } from './pages/Signout';
+import BookList from './pages/BookList';
+import { Write } from './pages/Write';
+import { Home } from './pages/Home';
+import { Users } from './pages/Users';
+import User from './pages/User';
+import Book from './pages/Book';
 import styles from './App.module.scss';
 
 const App = () => {

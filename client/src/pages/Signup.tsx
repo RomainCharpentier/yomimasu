@@ -6,8 +6,8 @@ import styles from '../common.scss';
 
 export class Signup extends React.Component {
 
-    constructor(props) {
-        super();
+    constructor(props: any) {
+        super(props);
         this.state = {
             email : '',
             nickname : '',
