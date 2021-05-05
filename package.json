@@ -20,7 +20,7 @@
 		"parcel-bundler": "^1.12.4",
 		"password-hash": "^1.2.2",
 		"prompt": "^1.0.0",
-		"pug": "^3.0.0",
+		"pug": "^3.0.1",
 		"react-file-viewer": "^1.2.1",
 		"web-vitals": "^1.1.0"
 	}
