@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Image } from 'react-bootstrap';
 import API from '../utils/API';
-import FetchData from '../components/FetchData.jsx';
+import FetchData from '../components/FetchData';
 
-const User = props => {
+const User = (props: any) => {
     const [user, setUser] = useState(null);
 
     return (

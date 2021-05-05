@@ -3,8 +3,8 @@ import API from '../utils/API';
 
 export class Signout extends React.Component {
 
-    constructor(props) {
-        super();
+    constructor(props: any) {
+        super(props);
         API.signout();
     }
     
