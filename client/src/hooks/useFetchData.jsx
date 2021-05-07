@@ -2,14 +2,10 @@ import { AxiosResponse } from 'axios';
 import { any } from 'prop-types';
 import React, { useState, useEffect } from 'react';
 
-type useFetchDataProps = {
-    action: () => Promise<AxiosResponse<any>>;
-}
-
-const useFetchData = ({ action }: useFetchDataProps) => {
+const useFetchData = ({ action }) => {
     const [error, setError] = useState('');
     const [isLoaded, setIsLoaded] = useState(false);
-    const [data, setData] = useState<AxiosResponse<any> | undefined>(undefined);
+    const [data, setData] = useState(undefined);
 
     useEffect(() => {
         let unmounted = false;

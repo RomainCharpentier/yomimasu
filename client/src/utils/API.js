@@ -1,13 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
-import { Book } from '../models/book';
-import { User } from '../models/user';
 const headers = {
     'Content-Type': 'application/json'
 };
 const burl = 'http://localhost:8000';
 
 export default {
-    signin : function(email: string, password: string) {
+    signin : function(email, password) {
         return axios.post(burl + '/user/signin', {
             email : email,
             password : password
@@ -16,7 +14,7 @@ export default {
         });
     },
 
-    signup : function(send: User) {
+    signup : function(send) {
         return axios.post(burl + '/user/signup', send, {headers: headers});
     },
     
@@ -38,11 +36,11 @@ export default {
         window.location.href = '/';
     },
 
-    getUser : function(token: string): Promise<AxiosResponse<User>> {
+    getUser : function(token) {
         return axios.post<User>(burl + '/user/getUser', {token: token}, {headers: headers});
     },
 
-    findUserByNickname : function(nickname: string) {
+    findUserByNickname : function(nickname) {
         return axios.post(burl + '/user/findUserByNickname', {nickname: nickname}, {headers: headers});
     },
 
@@ -50,11 +48,11 @@ export default {
         return axios.get(burl + '/user/getUsers', {headers: headers});
     },
 
-    updateUser : function(user: User) {
+    updateUser : function(user) {
         return axios.post(burl + '/user/updateUser', user, {headers: headers});
     },
 
-    deleteUser : function(email: string) {
+    deleteUser : function(email) {
         return axios.delete(`${burl}/user/deleteUser/${email}`, {headers: headers});
     },
 
@@ -62,12 +60,12 @@ export default {
         return axios.post(burl + '/book/getAll', {headers: headers});
     },
 
-    getBook : function(_id: number) {
+    getBook : function(_id) {
         return axios.post(burl + '/book/get', {_id: _id}, {headers: headers});
     },
 
-    createBook : function(book: Book) {
-        book.author = localStorage.getItem('token')!;
+    createBook : function(book) {
+        book.author = localStorage.getItem('token');
         return axios.post(burl + '/book/create', book, {headers: headers});
     }
 }

@@ -2,13 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import styles from '../common.scss';
 
-type BookItemProps = {
-    title: string;
-    text: string;
-    onClick?: ()=>void;
-}
-
-export const BookItem = ({ title, text, onClick }: BookItemProps) => {
+export const BookItem = ({ title, text, onClick }) => {
     
     //<Button variant="primary">{new Date(props.published).toLocaleDateString("fr-FR")}</Button>
     return (

@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import { BookItem } from '../components/BookItem';
-import { useAppContext } from '../AppContext';
-import PropTypes from 'prop-types';
 import API from '../utils/API';
-import withClick from '../hooks/withClick';
-import { Redirect } from 'react-router-dom';
 import FetchData from '../components/FetchData';
 
 const BookList = () => {

@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './common.scss';
-import App from './App.tsx';
+import App from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
-import { AppContextProvider } from './AppContext.tsx';
-import axios, { axiosResponse } from 'axios';
+import { AppContextProvider } from './AppContext.jsx';
+import axios from 'axios';
 import reportWebVitals from './reportWebVitals';
 
 // Axios Interceptor

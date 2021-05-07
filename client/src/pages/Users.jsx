@@ -2,10 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Image, Container, Col, Row, Button } from 'react-bootstrap';
 import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
-import Pagination from '../components/Pagination';
 import styles from "./Users.module.scss";
 import FetchData from '../components/FetchData';
-import { User } from '../models/user';
 
 export const Users = () => {
     const [page, setPage] = useState(0);
@@ -26,7 +24,7 @@ export const Users = () => {
         });
     }, []);
 
-    const userTemplate = (user: User) => (
+    const userTemplate = (user) => (
         <>
             <div className={styles.avatar} onClick={() => window.location.href = `${window.location.href}/${user.nickname}`}>
                 <Image className={'img-thumbnail', styles.avatarImage} src={ImageConverter.dataURIToImageFile(user.avatar)} roundedCircle fluid />
@@ -49,7 +47,7 @@ export const Users = () => {
                     const users = data.data;
                     return (
                         <div className={styles.displayUser}>
-                            {users.map(((user: User, index: number) => (
+                            {users.map(((user, index) => (
                                 // <div key={index}>{Object.entries(user)}</div>
                                 // <div key={index*2} >{(userTemplate(user))} </div>
                                 <Col key={index} className={styles.container} md={2} sm={4} xs={6}>

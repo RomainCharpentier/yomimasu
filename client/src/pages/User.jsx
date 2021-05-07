@@ -3,7 +3,7 @@ import { Image } from 'react-bootstrap';
 import API from '../utils/API';
 import FetchData from '../components/FetchData';
 
-const User = (props: any) => {
+const User = (props) => {
     const [user, setUser] = useState(null);
 
     return (

@@ -1,38 +1,44 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import API from '../utils/API';
-import PropTypes from 'prop-types';
+import DefaultAvatar from '../images/default_avatar.png';
 import styles from '../common.scss';
 
-export class Signin extends React.Component {
+export class Signup extends React.Component {
 
-    constructor(props: any) {
+    constructor(props) {
         super(props);
         this.state = {
             email : '',
-            password: ''
+            nickname : '',
+            password: '',
+            cpassword: ''
         };
         this.handleChange.bind(this);
         this.handleSubmit.bind(this);
     }
 
-    handleSubmit = () => {
-        if(this.state.email.length === 0){
+    handleSubmit = event => {
+        if(this.state.email.length === 0 || this.state.nickname.length === 0 
+            || this.state.password.length === 0 || this.state.password !== this.state.cpassword){
             return;
         }
-        if(this.state.password.length === 0){
-            return;
-        }
-        API.signin(this.state.email, this.state.password).then((data) => {
+        var _send = {
+            email: this.state.email,
+            nickname: this.state.nickname,
+            password: this.state.password,
+            avatar: DefaultAvatar
+        };
+        API.signup(_send).then((data) => {
             localStorage.setItem('token', data.data.token);
             window.location = '/';
         }, (error) => {
             console.log(error);
             return;
-        })
+        });
     }
-
-    handleChange = (event: ChangeEvent) => {
+    
+    handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
         });
@@ -41,20 +47,30 @@ export class Signin extends React.Component {
     render() {
         return (
             <div className={styles.Form}>
-                <h1>Connexion</h1>
+                <h1>Inscription</h1>
                 <div>
                     <FormGroup controlId='email'>
                         <FormLabel>Email</FormLabel>
                         <FormControl autoFocus type='email' value={this.state.email} onChange={this.handleChange}/>
                     </FormGroup>
-                    
+
+                    <FormGroup controlId='nickname'>
+                        <FormLabel>Pseudo</FormLabel>
+                        <FormControl type='text' value={this.state.nickname} onChange={this.handleChange}/>
+                    </FormGroup>
+
                     <FormGroup controlId='password'>
                         <FormLabel>Password</FormLabel>
                         <FormControl value={this.state.password} onChange={this.handleChange} type='password'/>
                     </FormGroup>
 
+                    <FormGroup controlId='cpassword'>
+                        <FormLabel>Confirm Password</FormLabel>
+                        <FormControl value={this.state.cpassword} onChange={this.handleChange} type='password'/>
+                    </FormGroup>
+
                     <Button onClick={this.handleSubmit} block type='submit'>
-                        Connexion
+                        Inscription
                     </Button>
                 </div>
             </div>

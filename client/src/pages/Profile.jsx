@@ -2,9 +2,8 @@ import React, { useState, KeyboardEvent } from 'react';
 import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
 import FetchData from '../components/FetchData';
-import { Button, Form, FormControl, FormGroup, FormLabel } from 'react-bootstrap';
+import { Button, Form, FormControl, FormGroup, FormLabel, Image } from 'react-bootstrap';
 import ImageInput from '../components/ImageInput';
-import { User } from '../models/user';
 
 export const Profile = () => {
 
@@ -16,7 +15,7 @@ export const Profile = () => {
     const [avatar_image, setAvatarImage] = useState('');
     const [default_avatar, setDefaultAvatar] = useState('');
     
-    const handleFileChange = (file: string) => {
+    const handleFileChange = (file) => {
         setAvatar(file);
         setAvatarWidth(300);
         setAvatarHeight(300);
@@ -27,9 +26,9 @@ export const Profile = () => {
     return (
         <div>
             <h1>Profil</h1>
-            <FetchData action={() => API.getUser(token!)}>
+            <FetchData action={() => API.getUser(token)}>
                 {data => {
-                    const user: User = data.data;
+                    const user = data.data;
                     // Convert the image
                     const image_file = ImageConverter.dataURIToImageFile(user.avatar);
                     setEmail(user.email);
