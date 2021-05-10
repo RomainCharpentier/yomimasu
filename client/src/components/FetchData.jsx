@@ -1,5 +1,5 @@
 import React from 'react';
-import useFetchData from '../hooks/useFetchData';
+import useFetchData from '../hooks/useFetchData.js';
 import Loader from './Loader';
 
 //https://github.com/screensyt/react-custom-hook-loader

@@ -23,12 +23,13 @@
     "react-is": "^17.0.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.4",
+    "react-scripts": "^4.0.3",
     "react-transition-group": "^4.4.1",
     "reactjs-popup": "^2.0.4"
   },
   "scripts": {
     "start": "parcel --no-hmr ./public/index.html --open",
+    "reload": "parcel --no-hmr ./public/index.html",
     "build": "parcel build ./public/index.html"
   },
   "browserslist": {

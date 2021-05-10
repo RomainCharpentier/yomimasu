@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
-import useAPIError from '../hooks/useAPIError';
+import useAPIError from '../hooks/useAPIError.js';
 import DropZone from '../components/Dropzone';
 import API from '../utils/API';
 import styles from '../common.scss';
@@ -21,6 +21,7 @@ export const Write = () => {
     const handleSubmit = event => {
         switch (mode) {
             case writeMode.FILE:
+                console.log('Sending file')
                 addError("Méthode pas encore implémentée", 501);
                 break;
             case writeMode.TEXT:

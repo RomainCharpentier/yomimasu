@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useAPIError from '../hooks/useAPIError';
+import useAPIError from '../hooks/useAPIError.js';
 import { Modal, Button } from 'react-bootstrap';
 
 export function APIErrorNotification() {

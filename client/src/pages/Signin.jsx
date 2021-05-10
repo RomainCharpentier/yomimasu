@@ -1,62 +1,55 @@
-import React, { ChangeEvent } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import API from '../utils/API';
 import styles from '../common.scss';
+import { useErrorOutlet } from '../hooks/useErrorOutlet';
 
-export class Signin extends React.Component {
+export const Signin = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            email : '',
-            password: ''
-        };
-        this.handleChange.bind(this);
-        this.handleSubmit.bind(this);
-    }
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const setError = useErrorOutlet();
 
-    handleSubmit = () => {
-        if(this.state.email.length === 0){
+    const handleSubmit = () => {
+        if(email.length === 0){
             return;
         }
-        if(this.state.password.length === 0){
+        if(password.length === 0){
             return;
         }
-        API.signin(this.state.email, this.state.password).then((data) => {
+        API.signin(email, password).then((data) => {
             localStorage.setItem('token', data.data.token);
             window.location = '/';
         }, (error) => {
-            console.log(error);
+            setError(error);
             return;
         })
     }
 
-    handleChange = (event) => {
-        this.setState({
-            [event.target.id]: event.target.value
-        });
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleSubmit();
+        }
     }
-    
-    render() {
-        return (
-            <div className={styles.Form}>
-                <h1>Connexion</h1>
-                <div>
-                    <FormGroup controlId='email'>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl autoFocus type='email' value={this.state.email} onChange={this.handleChange}/>
-                    </FormGroup>
-                    
-                    <FormGroup controlId='password'>
-                        <FormLabel>Password</FormLabel>
-                        <FormControl value={this.state.password} onChange={this.handleChange} type='password'/>
-                    </FormGroup>
 
-                    <Button onClick={this.handleSubmit} block type='submit'>
-                        Connexion
-                    </Button>
-                </div>
+    return (
+        <div className={styles.Form}>
+            <h1>Connexion</h1>
+            <div>
+                <FormGroup controlId='email'>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl autoFocus type='email' value={email} onChange={(event) => setEmail(event.target.value)} onKeyDown={handleKeyDown} />
+                </FormGroup>
+                
+                <FormGroup controlId='password'>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl value={password} onChange={(event) => setPassword(event.target.value)} type='password' onKeyDown={handleKeyDown} />
+                </FormGroup>
+
+                <Button onClick={handleSubmit} block type='submit'>
+                    Connexion
+                </Button>
             </div>
-        );
-    }
+        </div>
+    );
 }
