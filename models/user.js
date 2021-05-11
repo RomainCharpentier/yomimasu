@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const passwordHash = require('password-hash');
-const jwt = require('jwt-simple');
+const jwt = require('jsonwebtoken');
 const config = require('../config/config.js');
 
 var userModel = mongoose.Schema({
@@ -35,16 +35,16 @@ var userModel = mongoose.Schema({
 
 userModel.methods = {
 	authenticate: function (password) {
-		return passwordHash.verify(password, this.password);
+		return jwt.sign({email: this.email}, config.secret);
 	},
 	getToken: function () {
-		return jwt.encode(this, config.secret);
+		return jwt.sign({email: this.email}, config.secret);
 	}
 }
 
 userModel.statics = {
 	getUser: function (token) {
-		return jwt.decode(token, config.secret);
+		return jwt.verify(token, config.secret);
 	}
 }
 

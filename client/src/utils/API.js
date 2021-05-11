@@ -1,6 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
-const headers = {
-    'Content-Type': 'application/json'
+const config = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
 };
 const burl = 'http://localhost:8000';
 
@@ -9,13 +13,11 @@ export default {
         return axios.post(burl + '/user/signin', {
             email : email,
             password : password
-        }, {
-            headers: headers
-        });
+        }, config);
     },
 
     signup : function(send) {
-        return axios.post(burl + '/user/signup', send, {headers: headers});
+        return axios.post(burl + '/user/signup', send, config);
     },
     
     isAuth : function() {
@@ -37,35 +39,35 @@ export default {
     },
 
     getUser : function(token) {
-        return axios.post<User>(burl + '/user/getUser', {token: token}, {headers: headers});
+        return axios.get(burl + '/user/getUser', config);
     },
 
     findUserByNickname : function(nickname) {
-        return axios.post(burl + '/user/findUserByNickname', {nickname: nickname}, {headers: headers});
+        return axios.post(burl + '/user/findUserByNickname', {nickname: nickname}, config);
     },
 
     getUsers : function() {
-        return axios.get(burl + '/user/getUsers', {headers: headers});
+        return axios.get(burl + '/user/getUsers', config);
     },
 
     updateUser : function(user) {
-        return axios.post(burl + '/user/updateUser', user, {headers: headers});
+        return axios.post(burl + '/user/updateUser', user, config);
     },
 
     deleteUser : function(email) {
-        return axios.delete(`${burl}/user/deleteUser/${email}`, {headers: headers});
+        return axios.delete(`${burl}/user/deleteUser/${email}`, config);
     },
 
     getAllBooks : function() {
-        return axios.post(burl + '/book/getAll', {headers: headers});
+        return axios.post(burl + '/book/getAll', config);
     },
 
     getBook : function(_id) {
-        return axios.post(burl + '/book/get', {_id: _id}, {headers: headers});
+        return axios.post(burl + '/book/get', {_id: _id}, config);
     },
 
     createBook : function(book) {
         book.author = localStorage.getItem('token');
-        return axios.post(burl + '/book/create', book, {headers: headers});
+        return axios.post(burl + '/book/create', book, config);
     }
 }

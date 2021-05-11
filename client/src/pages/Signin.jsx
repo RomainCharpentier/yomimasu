@@ -18,7 +18,7 @@ export const Signin = () => {
             return;
         }
         API.signin(email, password).then((data) => {
-            localStorage.setItem('token', data.data.token);
+            localStorage.setItem('token', data.data);
             window.location = '/';
         }, (error) => {
             setError(error);
