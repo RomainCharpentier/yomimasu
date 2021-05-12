@@ -63,7 +63,7 @@ export default {
     },
 
     getBook : function(_id) {
-        return axios.post(burl + '/book/get', {_id: _id}, config);
+        return axios.get(`${burl}/book/get/${_id}`, config);
     },
 
     createBook : function(book) {

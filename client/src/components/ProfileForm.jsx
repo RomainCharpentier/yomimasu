@@ -3,6 +3,7 @@ import API from '../utils/API';
 import ImageConverter from '../utils/ImageConverter';
 import { Button, Form, FormControl, FormGroup, FormLabel, Image } from 'react-bootstrap';
 import ImageInput from '../components/ImageInput';
+import styles from '../common.scss';
 
 export const ProfileForm = ({ email, nickname, avatar }) => {
 
@@ -44,7 +45,7 @@ export const ProfileForm = ({ email, nickname, avatar }) => {
     }
     
     return (
-        <div>
+        <div className={styles.Form}>
             <Image src={avatar_image} className='rounded-circle' />
             <ImageInput action={handleFileChange} />
 

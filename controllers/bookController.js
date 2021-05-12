@@ -19,8 +19,8 @@ module.exports = function (router) {
     /**
      * POST Method : Return a book
      */
-    router.post('/get', function(req, res) {
-        Book.findOne({_id: req.body._id}, (err, books) => {
+    router.get('/get/:id', function(req, res) {
+        Book.findOne({_id: req.params.id}, (err, books) => {
             if (err) {
                 res.status(500);
             } else {
@@ -33,17 +33,17 @@ module.exports = function (router) {
      * POST Method : Create a book
      */
     router.post('/create', function(req, res) {
-        var book = {
+        const _b = new Book({
             title: req.body.title,
             text: req.body.text,
             author: User.getUser(req.body.author).email
-        };
-        var _b = new Book(book);
+        });
         _b.save((err, book) => {
             if (err) {
-                res.status(500);
+                console.log(err);
+                res.status(500).end();
             } else {
-                res.status(200);
+                res.status(200).end();
             }
         });
     });

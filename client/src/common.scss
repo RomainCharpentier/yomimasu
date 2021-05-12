@@ -84,3 +84,11 @@ code {
 .drawBorder {
     @include btn-border-drawing(#000, #58afd1, 4px, bottom, right);
 }
+
+.textAlignStart {
+    text-align: start;
+}
+
+.textAlignEnd {
+    text-align: end;
+}

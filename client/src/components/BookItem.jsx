@@ -10,7 +10,7 @@ export const BookItem = ({ title, text, onClick }) => {
             <Card.Body>
                 <Card.Title>{title}</Card.Title>
                 <Card.Text>
-                    {text}
+                    {text.substring(0,20)}
                 </Card.Text>
             </Card.Body>
         </Card>

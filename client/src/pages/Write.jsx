@@ -6,8 +6,8 @@ import API from '../utils/API';
 import styles from '../common.scss';
 
 const writeMode = {
-    FILE: 'file',
-    TEXT: 'text'
+    FILE: 'Fichier',
+    TEXT: 'Texte'
 }
 
 export const Write = () => {
@@ -28,8 +28,8 @@ export const Write = () => {
                 if(title.length === 0){
                     return;
                 }
-                API.createBook({title: {title}, text: {text}}).then((data) => {
-                    window.location = '/book';
+                API.createBook({title, text: text.replace('\n','\\n')}).then((data) => {
+                    window.location = '/book_list';
                 }, (error) => {
                     console.log(error);
                     return;
